@@ -107,6 +107,150 @@
   .errline { margin-top: 12px; color: var(--bad); font-size: 12.5px;
              font-family: var(--mono); }
 
+  /* ---------- gate demo ---------- */
+  /* One idea, three things on screen: the wallet, GenCheck in the middle, the
+     store. A coin travels from the wallet toward the store and is either turned
+     back or let through. That is the whole animation — no URL bar, no receipt,
+     no scan beam, nothing to read beyond one word.
+
+     The stage is decorative — `aria-hidden` in the markup — because a looping
+     animation is hostile to a screen reader. The same two outcomes are plain
+     text in `.gate-legend` underneath, which is what AT reads and what a
+     no-JS visitor sees.
+
+     On `prefers-reduced-motion` this does NOT stop. It keeps moving but drops
+     the pulsing and shortens the travel — an earlier version froze the whole
+     stage under that query, which meant anyone whose OS has animation effects
+     turned off (including, it turned out, the person this was built for) saw a
+     static picture and reasonably concluded there was no animation at all.
+
+     NOTE: the card is `.rail`/`.coin`, never `.card` — `.card` is already the
+     examples grid here, and `boot()` does querySelectorAll(".card") on it. */
+
+  .gatedemo { padding: 52px 0; }
+
+  .stage {
+    --start: 10%;              /* the wallet end of the rail */
+    --gate-pos: 50%;
+    --end: 90%;                /* the store end */
+    position: relative; overflow: hidden; isolation: isolate;
+    border: 1px solid var(--line2); border-radius: 14px; background: #0a0a0c;
+    padding: 30px 30px 24px; min-height: 246px;
+  }
+  /* A single soft wash behind everything. It is the only ambient layer left —
+     the mood still shifts red/green at the verdict, which is what sells it. */
+  .stage::before { content: ""; position: absolute; z-index: 0; inset: -40% -10% auto;
+                   height: 90%; pointer-events: none; transition: opacity 620ms ease;
+                   background: radial-gradient(ellipse at 50% 0%, rgba(148,163,184,.10), transparent 62%); }
+  .stage.blocked::before { background: radial-gradient(ellipse at 50% 0%, rgba(248,113,113,.26), transparent 62%); }
+  .stage.cleared::before { background: radial-gradient(ellipse at 50% 0%, rgba(62,207,142,.22), transparent 62%); }
+
+  /* ---- the three labels ---- */
+  .heads { position: relative; z-index: 2; display: grid;
+           grid-template-columns: 1fr auto 1fr; align-items: start; gap: 16px; }
+  .who { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .who.mid { justify-self: center; text-align: center; }
+  .who.end { justify-self: end; text-align: right; }
+  .who .k { font-family: var(--mono); font-size: 10px; font-weight: 500;
+            letter-spacing: .13em; text-transform: uppercase; color: var(--dim); }
+  .who .amt { position: relative; display: inline-grid; align-self: flex-start;
+              font-family: var(--mono); font-size: 21px; font-weight: 600; color: var(--text);
+              transition: color 340ms; }
+  .who.end .amt { align-self: flex-end; }
+  .who .amt b { grid-area: 1 / 1; font-weight: 600; transition: opacity 360ms ease; }
+  .amt .v2 { opacity: 0; }
+  .stage.paid .amt .v1 { opacity: 0; }
+  .stage.paid .amt .v2 { opacity: 1; }
+  .stage.blocked .amt { color: var(--accent); }
+  .who .dom { font-family: var(--mono); font-size: 13.5px; color: var(--muted);
+              overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+              max-width: 100%; transition: color 320ms; }
+  .run-a .d-b, .run-b .d-a { display: none; }
+  .stage.blocked .who.end .dom { color: var(--bad); }
+  .stage.cleared .who.end .dom { color: var(--accent); }
+
+  /* ---- the rail ---- */
+  .rail { position: relative; z-index: 1; height: 76px; margin: 2px 0 0; }
+  .track { position: absolute; left: 0; right: 0; top: 50%; height: 3px;
+           border-radius: 3px; background: var(--line2); transform: translateY(-50%); }
+
+  .gate { position: absolute; left: var(--gate-pos); top: 50%;
+          width: 58px; height: 58px; border-radius: 50%;
+          display: grid; place-items: center;
+          transform: translate(-50%, -50%);
+          background: #0d0d0f; border: 2px solid var(--line2); color: var(--dim);
+          transition: border-color 320ms, color 320ms, box-shadow 320ms; }
+  /* Reuses the page's existing `pulse` keyframe. */
+  .stage.checking .gate { border-color: var(--warn); color: var(--warn);
+                          animation: pulse 900ms ease infinite; }
+  .stage.blocked .gate { border-color: var(--bad); color: var(--bad);
+                         box-shadow: 0 0 0 7px var(--bad-dim); }
+  .stage.cleared .gate { border-color: var(--accent); color: var(--accent);
+                         box-shadow: 0 0 0 7px var(--accent-dim); }
+
+  .coin { position: absolute; z-index: 2; top: 50%; left: var(--start);
+          width: 26px; height: 26px; border-radius: 50%;
+          margin: -13px 0 0 -13px; will-change: left;
+          background: radial-gradient(circle at 34% 30%, #ffe9a8, #e0b64f 58%, #a8802c);
+          box-shadow: 0 0 0 5px rgba(224,182,79,.13), 0 3px 14px -3px rgba(224,182,79,.65);
+          transition: left 880ms cubic-bezier(.45,0,.25,1); }
+  .stage.moving .coin { left: var(--gate-pos); }
+  /* Turned back: a short, springy snap home. `moving` is dropped when this
+     lands, so the coin's own `left` is already the wallet end. */
+  .stage.blocked .coin { transition: left 400ms cubic-bezier(.5,-0.4,.3,1.45); }
+  /* Let through: it carries on to the store and is absorbed there. */
+  .stage.cleared .coin { left: var(--end); }
+
+  /* ---- the verdict: one word, big ---- */
+  .verdict { position: relative; z-index: 2; display: grid; place-items: center;
+             min-height: 66px; }
+  .vd { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center;
+        gap: 1px; opacity: 0; transform: translateY(6px) scale(.96);
+        transition: opacity 240ms ease, transform 400ms cubic-bezier(.2,1.4,.4,1); }
+  .stage.blocked .vd-bad, .stage.cleared .vd-ok { opacity: 1; transform: none; }
+  .run-a .vd-ok, .run-b .vd-bad { display: none; }
+  .vd b { font-size: 27px; font-weight: 600; letter-spacing: .01em; }
+  .vd i { font-style: normal; font-size: 13px; color: var(--dim); }
+  .vd-bad b { color: var(--bad); }
+  .vd-ok b { color: var(--accent); }
+
+  /* ---- the readable copy of what the stage shows ---- */
+  .gate-legend { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .lg { display: flex; align-items: center; gap: 11px; flex-wrap: wrap;
+        padding: 11px 14px; border: 1px solid var(--line); border-radius: 9px;
+        background: var(--panel); }
+  .lg-bad { border-left: 2px solid var(--bad); }
+  .lg-ok  { border-left: 2px solid var(--accent); }
+  .lg .dom { font-family: var(--mono); font-size: 12.5px; color: var(--text); }
+  .lg .out { font-size: 12.5px; color: var(--muted); flex: 1; min-width: 180px; }
+
+  .gatedemo-foot { margin-top: 14px; display: flex; justify-content: flex-end; }
+
+  /* Single-tick reset, so act two does not animate the rewind of act one.
+     `!important` is deliberate — a reset utility's job is to win. */
+  .stage.no-anim *, .stage.no-anim *::before, .stage.no-anim *::after {
+    transition: none !important; animation: none !important; }
+
+  @media (max-width: 720px) {
+    .stage { padding: 26px 16px 22px; min-height: 290px; --start: 9%; --end: 91%; }
+    .who .amt { font-size: 17px; }
+    .who .dom { font-size: 11.5px; }
+    .gate { width: 48px; height: 48px; }
+    .rail { height: 68px; }
+    .coin { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
+    .vd b { font-size: 21px; }
+    .lg .out { min-width: 100%; order: 3; }
+  }
+
+  /* Still animated, just calmer: no pulsing, shorter travel. It deliberately
+     does NOT disable the transitions — see the note at the top of this block. */
+  @media (prefers-reduced-motion: reduce) {
+    .stage.checking .gate { animation: none; border-color: var(--line2); color: var(--dim); }
+    .coin { transition-duration: 420ms; }
+    .stage.blocked .coin { transition-duration: 260ms; }
+    .gate, .vd, .who .dom, .amt { transition-duration: 200ms; }
+  }
+
   /* ---------- live bar ---------- */
   .livebar { display: none; margin-top: 14px; border: 1px solid var(--line);
              border-radius: 8px; background: var(--bg2); padding: 11px 14px;
@@ -358,6 +502,70 @@
       <span id="live-state">submitting…</span>
       <a id="live-tx" href="#" target="_blank" rel="noopener" style="display:none"></a>
       <span id="live-elapsed" style="margin-left:auto;color:var(--dim)"></span>
+    </div>
+  </div>
+</section>
+
+<section class="gatedemo" id="gate-demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="lbl">The intercept</span>
+        <h2 style="margin-top:6px">GenCheck stops your agent paying a scam site</h2>
+      </div>
+      <p>Your agent is about to pay. GenCheck checks the shop first — if it isn't the
+        real store, the money never leaves the wallet.</p>
+    </div>
+
+    <!-- The stage is theatre: a looping animation would spam a screen reader, so
+         it is hidden from AT and the same outcome is repeated as text below. -->
+    <div class="stage" id="gate-stage" aria-hidden="true">
+      <div class="heads">
+        <div class="who">
+          <span class="k">agent wallet</span>
+          <span class="amt"><b class="v1">2.40 GEN</b><b class="v2">1.10 GEN</b></span>
+        </div>
+        <div class="who mid"><span class="k">GenCheck</span></div>
+        <div class="who end">
+          <span class="k">store</span>
+          <span class="dom d-a">amazon-clone.github.io</span>
+          <span class="dom d-b">amazon.com</span>
+        </div>
+      </div>
+
+      <div class="rail">
+        <span class="track"></span>
+        <span class="gate">
+          <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor"
+               stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M12 3l7 3.2v5.6c0 4.4-2.9 7.7-7 9.2-4.1-1.5-7-4.8-7-9.2V6.2L12 3z"/>
+          </svg>
+        </span>
+        <span class="coin"></span>
+      </div>
+
+      <div class="verdict">
+        <span class="vd vd-bad"><b>&#10005; STOPPED</b><i>your money stayed safe</i></span>
+        <span class="vd vd-ok"><b>&#10003; PAID</b><i>1.30 GEN sent</i></span>
+      </div>
+    </div>
+
+    <div class="gate-legend">
+      <div class="lg lg-bad">
+        <span class="chip bad">&#10005; STOPPED</span>
+        <span class="dom">amazon-clone.github.io</span>
+        <span class="out">not the real store &mdash; nothing was sent, wallet still 2.40 GEN</span>
+      </div>
+      <div class="lg lg-ok">
+        <span class="chip ok">&#10003; PAID</span>
+        <span class="dom">amazon.com</span>
+        <span class="out">the real store &mdash; 1.30 GEN sent, wallet 2.40 &rarr; 1.10 GEN</span>
+      </div>
+    </div>
+
+    <div class="gatedemo-foot">
+      <button class="btn ghost" id="gate-replay" type="button"
+              aria-label="Replay the animation">&#8635; Replay</button>
     </div>
   </div>
 </section>
@@ -852,6 +1060,95 @@ function votesTable(consensus) {
   </table>`;
 }
 
+/* ------------------------------------------------------------ gate demo --- */
+/* A coin leaves the wallet, GenCheck checks the store, and the coin is either
+   turned back or let through. Two acts, on a loop.
+
+   Deliberately independent of boot(): it needs no API data, so a slow or failed
+   /api/examples must not hold it back.
+
+   The two timelines are the only thing to touch to re-time it. Each beat is
+   [ms from the act's start, classes to add, classes to remove]; offsets are
+   absolute, so nothing drifts as beats are added or removed.
+
+   There is deliberately no `prefers-reduced-motion` branch in here. An earlier
+   version short-circuited to a frozen "settled" frame under that query, which
+   meant anyone with animation effects switched off in their OS saw a still
+   image and no animation at all. The calmer variant now lives in CSS, where it
+   slows the motion down instead of removing it. */
+function initGateDemo() {
+  const stage = $("gate-stage");
+  if (!stage) return;
+  const replay = $("gate-replay");
+
+  const ACT_A = [            // the lookalike — turned back
+    [   0, ["moving"]],                          // the coin sets off
+    [1150, ["checking"]],                        // it reaches GenCheck
+    [1800, ["blocked"], ["moving", "checking"]], // ...and is sent home
+  ];
+  const ACT_B = [            // the real store — let through
+    [   0, ["moving"]],
+    [1150, ["checking"]],
+    [1600, ["cleared"], ["moving", "checking"]], // it carries on
+    [2000, ["paid"]],                            // the wallet debits
+  ];
+  const HOLD = { a: 4200, b: 4200 };   // how long each verdict sits before the next act
+  const STATES = ["moving", "checking", "blocked", "cleared", "paid"];
+
+  let timers = [], playing = false;
+
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  // Wipe the stage back to blank in a single frame, so act two does not animate
+  // the rewind of act one. Transitions are off for exactly one tick.
+  function setAct(r) {
+    stage.classList.add("no-anim");
+    STATES.forEach(c => stage.classList.remove(c));
+    stage.classList.remove("run-a", "run-b");
+    stage.classList.add("run-" + r);
+    void stage.offsetWidth;
+    stage.classList.remove("no-anim");
+  }
+
+  function playAct(r) {
+    setAct(r);
+    (r === "a" ? ACT_A : ACT_B).forEach(([t, add, rm]) => timers.push(setTimeout(() => {
+      if (rm) rm.forEach(c => stage.classList.remove(c));
+      if (add) add.forEach(c => stage.classList.add(c));
+    }, t)));
+    const next = r === "a" ? "b" : "a";
+    timers.push(setTimeout(() => {
+      // Every beat of this act has fired by now, so the handles are spent —
+      // dropping them here is what keeps `timers` from growing every loop.
+      timers = [];
+      playAct(next);
+    }, HOLD[r]));
+  }
+
+  function start() {
+    if (playing) return;
+    playing = true;
+    playAct("a");
+  }
+
+  function stop() {
+    clearTimers();
+    playing = false;
+    // Whatever verdict is standing stays standing: a frame paused mid-read
+    // should still read.
+  }
+
+  replay.addEventListener("click", () => { stop(); start(); });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting ? start() : stop());
+    }, { threshold: 0.25 }).observe(stage);
+  } else {
+    start();
+  }
+}
+
 /* ------------------------------------------------------------- wiring --- */
 $("go").addEventListener("click", runCheck);
 $("url").addEventListener("keydown", e => { if (e.key === "Enter") runCheck(); });
@@ -860,6 +1157,7 @@ $("nav-cta").addEventListener("click", () => {
   $("url").scrollIntoView({behavior: "smooth", block: "center"});
   $("url").focus({preventScroll: true});
 });
+initGateDemo();
 boot();
 </script>
 </body>

@@ -1,0 +1,1677 @@
+{
+  "contract": "0xD914Bf44b78df2CC3FeFf343769800E11690288B",
+  "prompt_version": "v5-admin-gated-cache-integrity",
+  "cases": [
+    {
+      "url": "https://vardhan2k3.github.io/Amazon-Clone-Project/checkout.html",
+      "brand": "amazon",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "Amazon checkout clone on github.io",
+      "source": "v3",
+      "domain": "vardhan2k3.github.io",
+      "started_at": 1789303223.6811988,
+      "tx_id": "0x9536be6f329843aba4eba4d37a8551bcb3100369b1c620dadac30035b30df9b0",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://vardhan2k3.github.io/Amazon-Clone-Project/checkout.html"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 42.5
+    },
+    {
+      "url": "https://rajesh207k.github.io/Aamazon_clone_2026",
+      "brand": "amazon",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "'Aamazon' typo-clone on github.io",
+      "source": "v3",
+      "domain": "rajesh207k.github.io",
+      "started_at": 1789303271.2160127,
+      "tx_id": "0xbced1b84305eabcbbbffeef735f00090f52086f2e8ee8d642e3d215f4583046d",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://rajesh207k.github.io/Aamazon_clone_2026"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 47.2
+    },
+    {
+      "url": "https://sukhpreetkaur2406.github.io/amazon-clone-project",
+      "brand": "amazon",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "Amazon storefront clone on github.io",
+      "source": "v3",
+      "domain": "sukhpreetkaur2406.github.io",
+      "started_at": 1789303323.412916,
+      "tx_id": "0x01e0c671f68dccc2ec459206ba49fb950bc262176ad024865d15d7d138241ba9",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://sukhpreetkaur2406.github.io/amazon-clone-project"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 40.8
+    },
+    {
+      "url": "https://officialshahzebanwar-stack.github.io/NETFLIX-CLONE",
+      "brand": "netflix",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "Netflix clone on github.io",
+      "source": "v3",
+      "domain": "officialshahzebanwar-stack.github.io",
+      "started_at": 1789303369.1977456,
+      "tx_id": "0x673a5f21a2051794c255bda7166c2a95ddd55687a12f9752d9ab5c8f8715973d",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is officialshahzebanwar-stack.github.io, which is a GitHub Pages subdomain and not netflix.com or a subdomain of netflix.com.",
+        "The page imitates Netflix branding and layout while being hosted on an unrelated domain, which matches impersonation behavior.",
+        "The page text itself states it is a student-made Netflix UI clone for educational purposes only and is not affiliated with or endorsed by Netflix."
+      ],
+      "evidence": [
+        "https://officialshahzebanwar-stack.github.io/NETFLIX-CLONE",
+        "https://www.netflix.com/"
+      ],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 56.8
+    },
+    {
+      "url": "https://bhatinishant38.github.io/Netflix-Clone",
+      "brand": "netflix",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "Netflix clone on github.io",
+      "source": "v3",
+      "domain": "bhatinishant38.github.io",
+      "started_at": 1789303430.969637,
+      "tx_id": "0xce31ba3b8e5542a8c864f75c28d1f206b0d009bec445f9840a61156f92d35087",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain 'github.io' does not belong to the official brand 'netflix.com'.",
+        "The URL path '/Netflix-Clone' explicitly identifies the site as a clone or imitation, not the official service.",
+        "The site is hosted on a free hosting platform (GitHub Pages), which is a common indicator of a phishing or impersonation attempt."
+      ],
+      "evidence": [
+        "https://bhatinishant38.github.io/Netflix-Clone"
+      ],
+      "cache_entry": {
+        "brand": "netflix",
+        "confidence": 100,
+        "domain": "bhatinishant38.github.io",
+        "is_real": false
+      },
+      "cache_brand": "netflix",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 51.1
+    },
+    {
+      "url": "https://shrimohite1.github.io/spotify-frontend-clone",
+      "brand": "spotify",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "Spotify clone on github.io",
+      "source": "v3",
+      "domain": "shrimohite1.github.io",
+      "started_at": 1789303487.0568476,
+      "tx_id": "0x010c63c8d6a59928a1e23bac7d0ff129214d6ab29fbc976d28fdf6f898fa8513",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "Domain does not belong to Spotify's official domain or a subdomain of it.",
+        "Page is hosted on GitHub Pages (github.io), which is not controlled by Spotify.",
+        "Page content mimics Spotify's design, indicating potential impersonation."
+      ],
+      "evidence": [
+        "https://shrimohite1.github.io/spotify-frontend-clone",
+        "https://spotify.com"
+      ],
+      "cache_entry": {
+        "brand": "spotify",
+        "confidence": 100,
+        "domain": "shrimohite1.github.io",
+        "is_real": false
+      },
+      "cache_brand": "spotify",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 59.5
+    },
+    {
+      "url": "https://exoduswallethelpcenter.vercel.app/",
+      "brand": "exodus",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "Exodus wallet phish on vercel (unregistered brand)",
+      "source": "v3",
+      "domain": "exoduswallethelpcenter.vercel.app",
+      "started_at": 1789303551.538479,
+      "tx_id": "0xa59c16a69a37f50b58fb4a59f6ebf9d28d36236e859842fafa5d37af7d3e2b9a",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is vercel.app with subdomain exoduswallethelpcenter, which is not Exodus's official domain or a subdomain of it.",
+        "Exodus's official website is generally known to use exodus.com, so a Vercel-hosted lookalike/help site does not belong to the brand.",
+        "The page text explicitly says it is an 'Independent site' and 'is not Exodus', confirming it is not the real seller."
+      ],
+      "evidence": [
+        "https://exoduswallethelpcenter.vercel.app/",
+        "https://www.exodus.com/"
+      ],
+      "cache_entry": {
+        "brand": "exodus",
+        "confidence": 99,
+        "domain": "exoduswallethelpcenter.vercel.app",
+        "is_real": false
+      },
+      "cache_brand": "exodus",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 54.3
+    },
+    {
+      "url": "https://fedx-logistics.netlify.app/login",
+      "brand": "fedex",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "'fedx' typosquat on netlify (unregistered brand)",
+      "source": "v3",
+      "domain": "fedx-logistics.netlify.app",
+      "started_at": 1789303610.832237,
+      "tx_id": "0x0b4e396dc2b889dada7799c09c37f0e6ecdb5a504d8107021222b91f0b86ea36",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://fedx-logistics.netlify.app/login"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 44.2
+    },
+    {
+      "url": "http://ledgre-wallet-io.pages.dev/",
+      "brand": "ledger",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "'ledgre' typosquat on pages.dev (unregistered, 403 to local curl \u2014 may fail)",
+      "source": "v3",
+      "domain": "ledgre-wallet-io.pages.dev",
+      "started_at": 1789303660.0651143,
+      "tx_id": "0xd1619a07adb37d71576ed105223161fd7308bb06efdf00c86b656e2b6f460916",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): http://ledgre-wallet-io.pages.dev/"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 48.2
+    },
+    {
+      "url": "https://www.walmart.com/checkout",
+      "brand": "amazon",
+      "category": "wrong_seller",
+      "expected_real": false,
+      "note": "real Walmart checkout claimed as Amazon",
+      "source": "v3",
+      "domain": "www.walmart.com",
+      "started_at": 1789303713.3067217,
+      "tx_id": "0x7cc2b887888f2869dbe06151b469e648759010187d65ec712d87887383a67d5e",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "wrong_seller",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is walmart.com, which is not amazon.com or a subdomain of amazon.com.",
+        "walmart.com is a legitimate domain for Walmart, so this is a different legitimate seller rather than Amazon.",
+        "The page text references Walmart Stores, Inc., reinforcing that the site belongs to Walmart, not Amazon."
+      ],
+      "evidence": [
+        "https://www.walmart.com/checkout",
+        "https://www.amazon.com/"
+      ],
+      "cache_entry": {
+        "brand": "amazon",
+        "confidence": 99,
+        "domain": "www.walmart.com",
+        "is_real": false
+      },
+      "cache_brand": "amazon",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 57.6
+    },
+    {
+      "url": "https://www.target.com/cart",
+      "brand": "paypal",
+      "category": "wrong_seller",
+      "expected_real": false,
+      "note": "real Target cart claimed as PayPal",
+      "source": "v3",
+      "domain": "www.target.com",
+      "started_at": 1789303775.9587765,
+      "tx_id": "0x8eb124ac3c661ed4cf64f1b1e14e171381fed339c9ed70bde4ef1e716fcb7bf0",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "wrong_seller",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The domain target.com belongs to Target, which is a separate legitimate retail entity and not the official domain of the claimed brand paypal.",
+        "The provided checkout URL is for a Target shopping cart, not a PayPal-owned domain."
+      ],
+      "evidence": [
+        "https://www.target.com/cart",
+        "paypal.com"
+      ],
+      "cache_entry": {
+        "brand": "paypal",
+        "confidence": 100,
+        "domain": "www.target.com",
+        "is_real": false
+      },
+      "cache_brand": "paypal",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 59.6
+    },
+    {
+      "url": "https://music.apple.com/us/browse",
+      "brand": "spotify",
+      "category": "wrong_seller",
+      "expected_real": false,
+      "note": "real Apple Music page claimed as Spotify",
+      "source": "v3",
+      "domain": "music.apple.com",
+      "started_at": 1789303840.5154042,
+      "tx_id": "0x2878d98a0a96ce18dbe99e0f293669582ee91c396224018d01af9af06dbf7cee",
+      "error": "GenLayerError: eth_getTransactionByHash failed (code=-32002): Service temporarily unavailable",
+      "duration_s": 30.1,
+      "skipped": true
+    },
+    {
+      "url": "https://www.apple.com/shop/bag",
+      "brand": "apple",
+      "category": "real",
+      "expected_real": true,
+      "note": "Apple bag",
+      "source": "v3",
+      "domain": "www.apple.com",
+      "started_at": 1789303875.646058,
+      "tx_id": "0xaa87e64aaea6918480ac08fe64b6b28c81c45f6e9d52f27f7c62d2bcceaeb7c2",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain (apple.com) is the official domain for the claimed brand 'apple'.",
+        "The page content, navigation, and contact information (1-800-MY-APPLE) are consistent with the official Apple Store.",
+        "The URL structure follows the standard format for the official Apple shopping bag."
+      ],
+      "evidence": [
+        "https://www.apple.com/shop/bag"
+      ],
+      "cache_entry": {
+        "brand": "apple",
+        "confidence": 100,
+        "domain": "www.apple.com",
+        "is_real": true
+      },
+      "cache_brand": "apple",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 94.6
+    },
+    {
+      "url": "https://www.amazon.com/gp/cart/view.html",
+      "brand": "amazon",
+      "category": "real",
+      "expected_real": true,
+      "note": "Amazon cart",
+      "source": "v3",
+      "domain": "www.amazon.com",
+      "started_at": 1789303975.234611,
+      "tx_id": "0x57ee6b8582cdc8cb8b52f7f606891603575310a4b9723fa71e9c80383232e7df",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": true,
+      "reasons": [
+        "cached: this domain was already judged for this brand"
+      ],
+      "evidence": [],
+      "cache_entry": {
+        "brand": "amazon",
+        "confidence": 99,
+        "domain": "www.amazon.com",
+        "is_real": true
+      },
+      "cache_brand": "amazon",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 53.4
+    },
+    {
+      "url": "https://www.paypal.com/signin",
+      "brand": "paypal",
+      "category": "real",
+      "expected_real": true,
+      "note": "PayPal signin",
+      "source": "v3",
+      "domain": "www.paypal.com",
+      "started_at": 1789304033.6217108,
+      "tx_id": "0xb2a95a9e2794dc4a51b264ee7992c2bf9b30dcdaf78c707e48dc26670c146acf",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is paypal.com, which is PayPal's official domain.",
+        "The path /signin is a standard PayPal login endpoint.",
+        "The page content displays PayPal branding and a standard login form consistent with PayPal's official sign-in page."
+      ],
+      "evidence": [
+        "https://www.paypal.com/signin"
+      ],
+      "cache_entry": {
+        "brand": "paypal",
+        "confidence": 99,
+        "domain": "www.paypal.com",
+        "is_real": true
+      },
+      "cache_brand": "paypal",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 66.0
+    },
+    {
+      "url": "https://www.microsoft.com/en-us/store/buy",
+      "brand": "microsoft",
+      "category": "real",
+      "expected_real": true,
+      "note": "MS Store",
+      "source": "v3",
+      "domain": "www.microsoft.com",
+      "started_at": 1789304104.6268888,
+      "tx_id": "0xdfb451fe4d1f1596d4f9437957afff9b89115b7e51ea298392fbebe6c8dceb33",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 95,
+      "cached": false,
+      "reasons": [
+        "Checkout URL domain is microsoft.com, which is the official domain of the claimed brand",
+        "URL path /en-us/store/buy is a legitimate Microsoft Store checkout path",
+        "Page text contains authentic Microsoft navigation, product references, and copyright"
+      ],
+      "evidence": [
+        "https://www.microsoft.com/en-us/store/buy"
+      ],
+      "cache_entry": {
+        "brand": "microsoft",
+        "confidence": 95,
+        "domain": "www.microsoft.com",
+        "is_real": true
+      },
+      "cache_brand": "microsoft",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 85.4
+    },
+    {
+      "url": "https://www.netflix.com/YourAccount",
+      "brand": "netflix",
+      "category": "real",
+      "expected_real": true,
+      "note": "Netflix account",
+      "source": "v3",
+      "domain": "www.netflix.com",
+      "started_at": 1789304195.0228426,
+      "tx_id": "0xc4682b4796ffa3252127aa05f3580264519cf8403259cef03b801077614fa1e7",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is netflix.com, which is the official domain of the claimed brand Netflix.",
+        "The path /YourAccount is on the same official domain, and the page text matches Netflix account sign-in/account-related content."
+      ],
+      "evidence": [
+        "https://www.netflix.com/YourAccount",
+        "Official brand domain referenced: netflix.com"
+      ],
+      "cache_entry": {
+        "brand": "netflix",
+        "confidence": 99,
+        "domain": "www.netflix.com",
+        "is_real": true
+      },
+      "cache_brand": "netflix",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 58.4
+    },
+    {
+      "url": "https://store.google.com/us",
+      "brand": "google",
+      "category": "real",
+      "expected_real": true,
+      "note": "Google Store (subdomain)",
+      "source": "v3",
+      "domain": "store.google.com",
+      "started_at": 1789304258.468935,
+      "tx_id": "0x489ca89a1634c7058f9ca1abf82dd57cfa84c712784d9005e7a3317892c21c66",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL 'https://store.google.com/us' is on the domain 'google.com', which is Google's official domain.",
+        "The subdomain 'store.google.com' is a legitimate subdomain of google.com, consistent with Google's official store.",
+        "The page content matches Google's branding, featuring official Google products such as Pixel phones, Pixel Watch, Pixel Buds, Nest devices, and Google Fi Wireless."
+      ],
+      "evidence": [
+        "https://store.google.com/us",
+        "https://google.com"
+      ],
+      "cache_entry": {
+        "brand": "google",
+        "confidence": 99,
+        "domain": "store.google.com",
+        "is_real": true
+      },
+      "cache_brand": "google",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 62.8
+    },
+    {
+      "url": "https://open.spotify.com",
+      "brand": "spotify",
+      "category": "real",
+      "expected_real": true,
+      "note": "Spotify (subdomain)",
+      "source": "v3",
+      "domain": "open.spotify.com",
+      "started_at": 1789304326.3035812,
+      "tx_id": "0x60c7809052fe2c14fef586fb03d0d0a6ac4fb9665427ea3f67dba8f52dfc25ea",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL 'https://open.spotify.com' uses the domain 'spotify.com', which is Spotify's official domain.",
+        "'open.spotify.com' is a well-known legitimate subdomain of spotify.com used for Spotify's web player and app links.",
+        "The subdomain structure matches the pattern of legitimate Spotify subdomains (e.g., open.spotify.com, accounts.spotify.com)."
+      ],
+      "evidence": [
+        "https://open.spotify.com",
+        "https://spotify.com"
+      ],
+      "cache_entry": {
+        "brand": "spotify",
+        "confidence": 99,
+        "domain": "open.spotify.com",
+        "is_real": true
+      },
+      "cache_brand": "spotify",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 76.2
+    },
+    {
+      "url": "https://github.com/pricing",
+      "brand": "github",
+      "category": "real",
+      "expected_real": true,
+      "note": "GitHub pricing",
+      "source": "v3",
+      "domain": "github.com",
+      "started_at": 1789304407.5220556,
+      "tx_id": "0xf3424ffb618f941dd344a9485a161e16577a6b5f78087f7f9746e4370dc5076b",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is github.com, which is the official domain of the claimed brand GitHub.",
+        "The page content and branding are consistent with GitHub pricing and plans, matching the claimed brand on its official site."
+      ],
+      "evidence": [
+        "https://github.com/pricing",
+        "https://github.com"
+      ],
+      "cache_entry": {
+        "brand": "github",
+        "confidence": 99,
+        "domain": "github.com",
+        "is_real": true
+      },
+      "cache_brand": "github",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 63.1
+    },
+    {
+      "url": "https://walmart.com/cart",
+      "brand": "walmart",
+      "category": "real",
+      "expected_real": true,
+      "note": "Walmart cart (new brand, apex)",
+      "source": "v3",
+      "domain": "walmart.com",
+      "started_at": 1789304475.6276581,
+      "tx_id": "0xf6989a74c8fcb40bd3617953f2b6368db4406d6d36a3d929b4c783ffff191864",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL's domain is exactly the official Walmart domain (walmart.com).",
+        "Page content includes Walmart branding (e.g., \"Walmart | Save Money. Live better.\") matching the claimed brand."
+      ],
+      "evidence": [
+        "https://walmart.com/cart",
+        "Page text contains \"Walmart | Save Money. Live better.\""
+      ],
+      "cache_entry": {
+        "brand": "walmart",
+        "confidence": 99,
+        "domain": "walmart.com",
+        "is_real": true
+      },
+      "cache_brand": "walmart",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 58.9
+    },
+    {
+      "url": "https://target.com/cart",
+      "brand": "target",
+      "category": "real",
+      "expected_real": true,
+      "note": "Target cart (new brand, apex)",
+      "source": "v3",
+      "domain": "target.com",
+      "started_at": 1789304539.5797107,
+      "tx_id": "0x713fa32f54a49e44ad4a10b5d1c5ba4bffb5173a79fe1265145213c3da6a4017",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is 'target.com', which is the official domain for the Target brand.",
+        "The URL path '/cart' is consistent with a standard e-commerce cart/checkout page on Target's official website.",
+        "The page content, while minimal, matches the general structure of Target's official site (skip to main content, footer, privacy policy, terms)."
+      ],
+      "evidence": [
+        "https://target.com/cart",
+        "https://target.com"
+      ],
+      "cache_entry": {
+        "brand": "target",
+        "confidence": 99,
+        "domain": "target.com",
+        "is_real": true
+      },
+      "cache_brand": "target",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 73.4
+    },
+    {
+      "url": "https://store.microsoft-surface.ru/aksiessuary/klaviatury/surface-pro-type-cover/surface-pro-type-cover-black",
+      "brand": "microsoft",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_brand_match",
+      "source": "csv",
+      "domain": "store.microsoft-surface.ru",
+      "started_at": 1789304617.9568396,
+      "tx_id": "0x21a66b2596fcf036ae160673d85d42082b868f5bce46a5ed8de146161cbc1c8a",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "Domain is not owned by Microsoft",
+        "Domain is a typosquatting attempt on the Microsoft Surface brand",
+        "Checkout page uses Russian language and local currency, but domain is not microsoft.com or official subdomain"
+      ],
+      "evidence": [
+        "https://store.microsoft-surface.ru/",
+        "https://www.microsoft.com/"
+      ],
+      "cache_entry": {
+        "brand": "microsoft",
+        "confidence": 99,
+        "domain": "store.microsoft-surface.ru",
+        "is_real": false
+      },
+      "cache_brand": "microsoft",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 73.1
+    },
+    {
+      "url": "http://microsoft.userid-81d.ws/subscription/yjfnbtcfowt-av53dwkb-bfjjnw1_yum9wew=/xvhduik4ammt5ynspz59mzl5ikd_6hnh",
+      "brand": "microsoft",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_brand_match",
+      "source": "csv",
+      "domain": "microsoft.userid-81d.ws",
+      "started_at": 1789304696.0253856,
+      "tx_id": "0x4dfa5e75166ed9045d9b6adb4d749200b64819f39eed1f4d4985baa283fd4f11",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The domain 'userid-81d.ws' is not the official domain for Microsoft (microsoft.com).",
+        "The URL uses a subdomain trick ('microsoft.userid-81d.ws') to impersonate the brand.",
+        "The TLD '.ws' (Western Samoa) is commonly used for phishing and is not an official Microsoft TLD for subscriptions."
+      ],
+      "evidence": [
+        "http://microsoft.userid-81d.ws/subscription/yjfnbtcfowt-av53dwkb-bfjjnw1_yum9wew=/xvhduik4ammt5ynspz59mzl5ikd_6hnh"
+      ],
+      "cache_entry": {
+        "brand": "microsoft",
+        "confidence": 100,
+        "domain": "microsoft.userid-81d.ws",
+        "is_real": false
+      },
+      "cache_brand": "microsoft",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 68.2
+    },
+    {
+      "url": "https://microsoft-mail-outlook.myportfolio.com",
+      "brand": "microsoft",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_brand_match",
+      "source": "csv",
+      "domain": "microsoft-mail-outlook.myportfolio.com",
+      "started_at": 1789304769.1855543,
+      "tx_id": "0x84971be348e20963ba1bcefb0f7945e63d352d497743d2a89b95f0a973d88421",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout domain 'myportfolio.com' does not belong to Microsoft.",
+        "The official Microsoft domain is 'microsoft.com'.",
+        "The checkout URL uses a subdomain of a different service ('myportfolio.com') to mimic Microsoft."
+      ],
+      "evidence": [
+        "https://microsoft-mail-outlook.myportfolio.com",
+        "https://www.microsoft.com"
+      ],
+      "cache_entry": {
+        "brand": "microsoft",
+        "confidence": 99,
+        "domain": "microsoft-mail-outlook.myportfolio.com",
+        "is_real": false
+      },
+      "cache_brand": "microsoft",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 79.0
+    },
+    {
+      "url": "https://shubham-ebay-clone.netlify.app/sell",
+      "brand": "ebay",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_brand_match",
+      "source": "csv",
+      "domain": "shubham-ebay-clone.netlify.app",
+      "started_at": 1789304853.1698039,
+      "tx_id": "0x8c117af958dfac4b5cc7506da736aee84cd0c74507e076e6a7802ac64152b91b",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain 'netlify.app' does not belong to eBay.",
+        "The URL 'shubham-ebay-clone.netlify.app' explicitly identifies itself as a 'clone' in the subdomain.",
+        "eBay's official domain is 'ebay.com'; this site is a third-party hosting platform (Netlify) used to host a replica of eBay's selling page."
+      ],
+      "evidence": [
+        "https://shubham-ebay-clone.netlify.app/sell"
+      ],
+      "cache_entry": {
+        "brand": "ebay",
+        "confidence": 100,
+        "domain": "shubham-ebay-clone.netlify.app",
+        "is_real": false
+      },
+      "cache_brand": "ebay",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 66.6
+    },
+    {
+      "url": "https://ikea-promotion.com",
+      "brand": "ikea",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_brand_match",
+      "source": "csv",
+      "domain": "ikea-promotion.com",
+      "started_at": 1789304924.729988,
+      "tx_id": "0x0fa7feac368159b42ba2dfc68fe4b6bf3610164c048cd16c7ab71a4245d193cd",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain 'ikea-promotion.com' does not belong to IKEA's official domain or a subdomain of it",
+        "The page content is entirely unrelated to IKEA, focusing on a cryptocurrency wallet ('tp\u4ea4\u6613\u6240app') and digital assets, which is inconsistent with IKEA's business",
+        "IKEA's official domain is known to be 'ikea.com' or country-specific variants (e.g., 'ikea.cn', 'ikea.us'), none of which match the provided URL"
+      ],
+      "evidence": [
+        "https://ikea-promotion.com",
+        "Page content describes a cryptocurrency wallet service, not IKEA products or services"
+      ],
+      "cache_entry": {
+        "brand": "ikea",
+        "confidence": 100,
+        "domain": "ikea-promotion.com",
+        "is_real": false
+      },
+      "cache_brand": "ikea",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 58.9
+    },
+    {
+      "url": "https://trackyourpackageusps.blogspot.com.br",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "trackyourpackageusps.blogspot.com.br",
+      "started_at": 1789304988.6258001,
+      "tx_id": "0xbc0eb53db9855e991807472257d05e4c3aab1bde71b25c81038cb55bf5836943",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://trackyourpackageusps.blogspot.com.br"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 47.2
+    },
+    {
+      "url": "http://login0365organizationsigning.com/1b81bf40423faee8738dec6cec97167466613fafc1ef9log1b81bf40423faee8738dec6cec97167466613fafc1efa",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "login0365organizationsigning.com",
+      "started_at": 1789305040.8564606,
+      "tx_id": "0xa4a185f961c6fdb0711b05e1564ffe03b7f7762a47cd5fecc3acd7bdc993a8a8",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The claimed brand is \"unknown\", and there is no evidence that the domain login0365organizationsigning.com is the official domain of that brand or a subdomain of it.",
+        "The domain name login0365organizationsigning.com is highly suspicious and resembles a phishing-style Microsoft/Office 365 themed domain rather than a legitimate merchant checkout domain.",
+        "The page text states the domain has been seized by Microsoft for alleged cybercrime activity, which strongly indicates the domain was used maliciously and is not a real seller for the claimed brand."
+      ],
+      "evidence": [
+        "http://login0365organizationsigning.com/1b81bf40423faee8738dec6cec97167466613fafc1ef9log1b81bf40423faee8738dec6cec97167466613fafc1efa",
+        "http://login0365organizationsigning.com"
+      ],
+      "cache_entry": {
+        "brand": "unknown",
+        "confidence": 99,
+        "domain": "login0365organizationsigning.com",
+        "is_real": false
+      },
+      "cache_brand": "unknown",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 51.3
+    },
+    {
+      "url": "https://flqwakhjxr.np9q2f3.sbs",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "flqwakhjxr.np9q2f3.sbs",
+      "started_at": 1789305097.2096634,
+      "tx_id": "0x2663b6416139aeb37a7cb69f17a78e9306f64eff1a6a21ed8974fabd4d8a141e",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "scam",
+      "is_real": false,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The domain 'flqwakhjxr.np9q2f3.sbs' is a random alphanumeric string on a low-cost Top-Level Domain (.sbs), which is a characteristic sign of a phishing or scam site.",
+        "The page content attempts to impersonate Trip.com, but the URL has no relation to the official trip.com domain.",
+        "The domain does not belong to the claimed brand 'unknown' or the brand displayed on the page (Trip.com)."
+      ],
+      "evidence": [
+        "https://flqwakhjxr.np9q2f3.sbs"
+      ],
+      "cache_entry": {
+        "brand": "unknown",
+        "confidence": 100,
+        "domain": "flqwakhjxr.np9q2f3.sbs",
+        "is_real": false
+      },
+      "cache_brand": "unknown",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 57.0
+    },
+    {
+      "url": "https://filedoc-myportfolio.myportfolio.com",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "filedoc-myportfolio.myportfolio.com",
+      "started_at": 1789305159.2441967,
+      "tx_id": "0x8e5c2b1b2564c3d2e251c5aa75fdcf30f18844ecaf0ca0abd0212627692473ce",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unsure",
+      "is_real": false,
+      "confidence": 20,
+      "cached": false,
+      "reasons": [
+        "Official domain for brand \"unknown\" is not provided, so domain ownership cannot be verified",
+        "Checkout URL belongs to the myportfolio.com domain, which shows no apparent connection to the claimed brand"
+      ],
+      "evidence": [
+        "https://filedoc-myportfolio.myportfolio.com"
+      ],
+      "cache_entry": {
+        "brand": "unknown",
+        "confidence": 20,
+        "domain": "filedoc-myportfolio.myportfolio.com",
+        "is_real": false
+      },
+      "cache_brand": "unknown",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 52.2
+    },
+    {
+      "url": "http://stro.uscreen.io/pages/global",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "stro.uscreen.io",
+      "started_at": 1789305216.4761608,
+      "tx_id": "0x6d90dc1224c6b3e90c14f9ae32c8008fc6ca2a7609d3beb594ba795bed987360",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unsure",
+      "is_real": false,
+      "confidence": 85,
+      "cached": false,
+      "reasons": [
+        "The claimed brand is 'unknown', meaning we cannot identify an official domain to compare against.",
+        "The checkout URL domain is 'uscreen.io', which is a well-known video membership platform (Uscreen) \u2014 a legitimate third-party SaaS company.",
+        "The page content clearly belongs to Uscreen's own marketing/product page, not to any identifiable 'unknown' brand."
+      ],
+      "evidence": [
+        "http://stro.uscreen.io/pages/global",
+        "https://www.uscreen.io"
+      ],
+      "cache_entry": {
+        "brand": "unknown",
+        "confidence": 85,
+        "domain": "stro.uscreen.io",
+        "is_real": false
+      },
+      "cache_brand": "unknown",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 69.3
+    },
+    {
+      "url": "https://ledger.band",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "ledger.band",
+      "started_at": 1789305290.7817597,
+      "tx_id": "0xf3ea64caa6bbb3e03b4c8eabd112517d2458319f883401642e8088ba27b59e73",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "wrong_seller",
+      "is_real": false,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The claimed brand is \"unknown\", and there is no basis that ledger.band is the official domain or a subdomain of that brand.",
+        "The page text indicates ledger.band is a domain-for-sale landing page, not a checkout operated by the claimed brand.",
+        "The domain does not appear to mimic an official domain for \"unknown\"; it appears to be a different unrelated domain, so this is a wrong-seller case rather than direct impersonation."
+      ],
+      "evidence": [
+        "https://ledger.band"
+      ],
+      "cache_entry": {
+        "brand": "unknown",
+        "confidence": 99,
+        "domain": "ledger.band",
+        "is_real": false
+      },
+      "cache_brand": "unknown",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 56.6
+    },
+    {
+      "url": "https://sdvrg.blogspot.hr",
+      "brand": "unknown",
+      "category": "phishing",
+      "expected_real": false,
+      "note": "phishing_database_generic",
+      "source": "csv",
+      "domain": "sdvrg.blogspot.hr",
+      "started_at": 1789305352.394599,
+      "tx_id": "0x70fdd6f51f4a3f9c14a896273fdaf37e9378db1ae25e46ad6c0fb72cdf03a77a",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://sdvrg.blogspot.hr"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": true,
+      "duration_s": 41.4
+    },
+    {
+      "url": "https://shopify.com/checkout",
+      "brand": "shopify",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "shopify.com",
+      "started_at": 1789305398.8196604,
+      "tx_id": "0x0b4f28735ae80e2f3d10408ac058a386a00de860be92324b4b93b714d62c1bee",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL uses the domain shopify.com, which is Shopify's official domain.",
+        "The page content is branded as Shopify and discusses Shopify Checkout, consistent with the claimed brand."
+      ],
+      "evidence": [
+        "https://shopify.com/checkout",
+        "https://shopify.com"
+      ],
+      "cache_entry": {
+        "brand": "shopify",
+        "confidence": 99,
+        "domain": "shopify.com",
+        "is_real": true
+      },
+      "cache_brand": "shopify",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 52.3
+    },
+    {
+      "url": "https://walmart.com/checkout",
+      "brand": "walmart",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "walmart.com",
+      "started_at": 1789318906.1461084,
+      "tx_id": "0x602e86f858a3d6b939dc2c4178fffd2b298cb108425ae7840201c1f3a4e00627",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": true,
+      "reasons": [
+        "cached: this domain was already judged for this brand"
+      ],
+      "evidence": [],
+      "cache_entry": {
+        "brand": "walmart",
+        "confidence": 99,
+        "domain": "walmart.com",
+        "is_real": true
+      },
+      "cache_brand": "walmart",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 41.2
+    },
+    {
+      "url": "https://paypal.com/checkout",
+      "brand": "paypal",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "paypal.com",
+      "started_at": 1789318952.3418164,
+      "tx_id": "0x490b613b7c6199fae4feda88572ba3c7ae203cf370986c2d72612a00ebddefa5",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is paypal.com, which is the official domain for PayPal.",
+        "The page content is consistent with PayPal's official checkout product, describing PayPal Checkout features, payment methods, and integrations.",
+        "The branding, terminology, and content (PayPal, Venmo, Pay Later, Fastlane by PayPal, etc.) all match PayPal's known products and services."
+      ],
+      "evidence": [
+        "https://paypal.com/checkout"
+      ],
+      "cache_entry": {
+        "brand": "paypal",
+        "confidence": 99,
+        "domain": "paypal.com",
+        "is_real": true
+      },
+      "cache_brand": "paypal",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 62.2
+    },
+    {
+      "url": "https://target.com/checkout",
+      "brand": "target",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "target.com",
+      "started_at": 1789319019.5911727,
+      "tx_id": "0x1cba55ce15ba7271b98ac639d4d4595f15149a11c8f0925ed3c7518d1eb29307",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": true,
+      "reasons": [
+        "cached: this domain was already judged for this brand"
+      ],
+      "evidence": [],
+      "cache_entry": {
+        "brand": "target",
+        "confidence": 99,
+        "domain": "target.com",
+        "is_real": true
+      },
+      "cache_brand": "target",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 41.0
+    },
+    {
+      "url": "https://netflix.com/checkout",
+      "brand": "netflix",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "netflix.com",
+      "started_at": 1789319065.6349056,
+      "tx_id": "0xdd481c069bd12693409835feb1b66b790d20a8c62bedaabd96239d25df0a6201",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL's domain is 'netflix.com', which is the official domain of the claimed brand 'netflix'.",
+        "The page returned a 404 error, which is consistent with Netflix's legitimate behavior (the checkout path may not exist or may require authentication)."
+      ],
+      "evidence": [
+        "https://netflix.com/checkout"
+      ],
+      "cache_entry": {
+        "brand": "netflix",
+        "confidence": 100,
+        "domain": "netflix.com",
+        "is_real": true
+      },
+      "cache_brand": "netflix",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 52.2
+    },
+    {
+      "url": "https://sephora.com/checkout",
+      "brand": "sephora",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "sephora.com",
+      "started_at": 1789319122.8630598,
+      "tx_id": "0x8361b4c60e908717822c6110f06f3fa4b7254a117db4ad6fb7a2667cdbf99034",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://sephora.com/checkout"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": false,
+      "duration_s": 46.0
+    },
+    {
+      "url": "https://costco.com/checkout",
+      "brand": "costco",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "costco.com",
+      "started_at": 1789319173.8336995,
+      "tx_id": "0x5e200daecb67b63f9a1df59e701d01951c96aae5917ea91e1c371d9aa036edab",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "unverifiable",
+      "is_real": false,
+      "confidence": 0,
+      "cached": false,
+      "reasons": [
+        "checkout page could not be fetched by validators (bot-blocking or offline): https://costco.com/checkout"
+      ],
+      "evidence": [],
+      "cache_entry": null,
+      "cache_absent": "GenLayerError",
+      "correct": false,
+      "duration_s": 46.5
+    },
+    {
+      "url": "https://nature.com",
+      "brand": "nature",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "nature.com",
+      "started_at": 1789319225.373376,
+      "tx_id": "0xa76a499cbc82b41136d228576f79c8eccc2df3acd9f45e084c0b17834cbd7e73",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL's domain (nature.com) is the official primary domain for the scientific publisher Nature Portfolio, which publishes the 'Nature' journal and is commonly known by the brand 'nature'."
+      ],
+      "evidence": [
+        "https://nature.com"
+      ],
+      "cache_entry": {
+        "brand": "nature",
+        "confidence": 100,
+        "domain": "nature.com",
+        "is_real": true
+      },
+      "cache_brand": "nature",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 62.0
+    },
+    {
+      "url": "https://arxiv.org",
+      "brand": "arxiv",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "arxiv.org",
+      "started_at": 1789319292.4257293,
+      "tx_id": "0x7630d870d5c3bb065772386a210ed0635d43469efc2b3989a11ccf20de54d3ae",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is arxiv.org, which is the official domain used by arXiv.",
+        "The page text matches arXiv's known branding and purpose as an open-access archive for scholarly articles."
+      ],
+      "evidence": [
+        "https://arxiv.org"
+      ],
+      "cache_entry": {
+        "brand": "arxiv",
+        "confidence": 99,
+        "domain": "arxiv.org",
+        "is_real": true
+      },
+      "cache_brand": "arxiv",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 56.7
+    },
+    {
+      "url": "https://bbc.com",
+      "brand": "bbc",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "bbc.com",
+      "started_at": 1789319354.1119053,
+      "tx_id": "0x6b6934227c3344e0a8a62fdb141219b226aa3e821cffce8a26add5012f82c246",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 98,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is bbc.com, which is the official domain of the BBC.",
+        "The page content is consistent with BBC News branding and editorial content, matching the claimed brand 'bbc'."
+      ],
+      "evidence": [
+        "https://bbc.com"
+      ],
+      "cache_entry": {
+        "brand": "bbc",
+        "confidence": 98,
+        "domain": "bbc.com",
+        "is_real": true
+      },
+      "cache_brand": "bbc",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 51.4
+    },
+    {
+      "url": "https://mozilla.com",
+      "brand": "mozilla",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "mozilla.com",
+      "started_at": 1789319410.5121686,
+      "tx_id": "0x9fc6b74748d075a52f3913de81f6b91029443a137cfc875cf175beb8a95e3e07",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL's domain (mozilla.com) is the official domain of Mozilla, the organization behind the Firefox browser and other Mozilla products",
+        "The page content and branding are consistent with Mozilla's official messaging, design, and product offerings (e.g., Firefox download, privacy-focused features)"
+      ],
+      "evidence": [
+        "https://mozilla.com"
+      ],
+      "cache_entry": {
+        "brand": "mozilla",
+        "confidence": 100,
+        "domain": "mozilla.com",
+        "is_real": true
+      },
+      "cache_brand": "mozilla",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 351.3
+    },
+    {
+      "url": "https://pinterest.com",
+      "brand": "pinterest",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "pinterest.com",
+      "started_at": 1789319766.8385777,
+      "tx_id": "0x49f17ee928190dc13736cf26f1d345920ae448249d20cdd402915911dad28eaf",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 99,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain is pinterest.com, which is the official domain of Pinterest.",
+        "The URL is on the root official domain, so it belongs to the claimed brand under the domain-ownership rule."
+      ],
+      "evidence": [
+        "https://pinterest.com"
+      ],
+      "cache_entry": {
+        "brand": "pinterest",
+        "confidence": 99,
+        "domain": "pinterest.com",
+        "is_real": true
+      },
+      "cache_brand": "pinterest",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 46.3
+    },
+    {
+      "url": "https://office.com",
+      "brand": "office",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "office.com",
+      "started_at": 1789319818.1761038,
+      "tx_id": "0xf5a2ea45b277ce5b768a76ad3e89158744a83450a67cd856390fb9456c18f21e",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "wrong_seller",
+      "is_real": false,
+      "confidence": 93,
+      "cached": false,
+      "reasons": [
+        "The checkout domain is office.com, which matches the claimed brand name 'office' and is not a lookalike, but the page content is clearly for Microsoft/Microsoft 365 rather than the claimed brand 'office'.",
+        "Because the domain appears to belong to a different legitimate seller/brand context (Microsoft Office/Microsoft 365) rather than an official seller identity for the standalone brand claim 'office', it should not be treated as the real seller for the claimed brand under the ownership rule."
+      ],
+      "evidence": [
+        "https://office.com",
+        "Page text shows branding such as 'Microsoft', 'Microsoft 365', and 'Buy Microsoft 365'"
+      ],
+      "cache_entry": {
+        "brand": "office",
+        "confidence": 93,
+        "domain": "office.com",
+        "is_real": false
+      },
+      "cache_brand": "office",
+      "cache_brand_matches": true,
+      "correct": false,
+      "duration_s": 57.1
+    },
+    {
+      "url": "https://cnn.com",
+      "brand": "cnn",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "cnn.com",
+      "started_at": 1789319880.3020191,
+      "tx_id": "0x313a5d2e74f90b6e77e94dc89c67ae7e642bc155f7d2d376637bfae30dad3b10",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 95,
+      "cached": false,
+      "reasons": [
+        "checkout URL domain exactly matches cnn's official domain cnn.com"
+      ],
+      "evidence": [
+        "https://cnn.com"
+      ],
+      "cache_entry": {
+        "brand": "cnn",
+        "confidence": 95,
+        "domain": "cnn.com",
+        "is_real": true
+      },
+      "cache_brand": "cnn",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 56.6
+    },
+    {
+      "url": "https://flickr.com",
+      "brand": "flickr",
+      "category": "real",
+      "expected_real": true,
+      "note": "top_sites_generic",
+      "source": "csv",
+      "domain": "flickr.com",
+      "started_at": 1789319941.9066377,
+      "tx_id": "0xaa3ac886abba3f60184670e057f219a27c9da095fbbf991042559807191d3e80",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 95,
+      "cached": false,
+      "reasons": [
+        "Domain exactly matches flickr.com, the official domain for Flickr",
+        "Page content promotes Flickr Pro and matches known Flickr branding and services"
+      ],
+      "evidence": [
+        "https://flickr.com"
+      ],
+      "cache_entry": {
+        "brand": "flickr",
+        "confidence": 95,
+        "domain": "flickr.com",
+        "is_real": true
+      },
+      "cache_brand": "flickr",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 51.4
+    },
+    {
+      "url": "https://nike.com/checkout",
+      "brand": "nike",
+      "category": "real",
+      "expected_real": true,
+      "note": "curated_brand_list",
+      "source": "csv",
+      "domain": "nike.com",
+      "started_at": 1789319998.298016,
+      "tx_id": "0x72dbcf250ecf61bb6c1010b703c87aaff0239e1fa331a7a49f5dfcf2da656d5e",
+      "result_name": "MAJORITY_AGREE",
+      "execution": "FINISHED_WITH_RETURN",
+      "consensus_ok": true,
+      "verdict": "real",
+      "is_real": true,
+      "confidence": 100,
+      "cached": false,
+      "reasons": [
+        "The checkout URL domain 'nike.com' is the official, primary domain for the brand Nike.",
+        "The page content, including legal links like 'Nike Privacy Policy' and '\u00a9 2026 Nike, Inc.', aligns with the official brand identity.",
+        "The domain is not a subdomain of a third-party platform or a suspicious lookalike domain."
+      ],
+      "evidence": [
+        "https://nike.com/checkout"
+      ],
+      "cache_entry": {
+        "brand": "nike",
+        "confidence": 100,
+        "domain": "nike.com",
+        "is_real": true
+      },
+      "cache_brand": "nike",
+      "cache_brand_matches": true,
+      "correct": true,
+      "duration_s": 62.8
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 Deploys a FRESH contract instance (clean cache) and runs a labeled dataset of
 real and fake checkout URLs through real GenLayer consensus. Results are
-written incrementally to benchmark_results.json so progress survives
+written incrementally to benchmarks/benchmark_results.json so progress survives
 interruptions.
 
 Usage:
@@ -20,7 +20,7 @@ from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 from genlayer_py.transactions import is_successful
 
-RESULTS_FILE = "benchmark_results.json"
+RESULTS_FILE = "benchmarks/benchmark_results.json"
 
 # Labeled dataset. Every domain is distinct across ALL cases so each one gets
 # a fresh LLM judgment (no cache hits).

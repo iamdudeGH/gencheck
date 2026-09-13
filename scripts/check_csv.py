@@ -1,8 +1,8 @@
-"""Fetchability-check every URL in gencheck_benchmark.csv (concurrently).
+"""Fetchability-check every URL in benchmarks/gencheck_benchmark.csv (concurrently).
 
 Most phishing-database URLs are taken down; the GenLayer validators fetch
 pages live, so only URLs serving content now are usable benchmark cases.
-Writes csv_live_check.json.
+Writes benchmarks/csv_live_check.json.
 
 Usage:
     .venv-deploy/Scripts/python scripts/check_csv.py
@@ -41,14 +41,14 @@ def check_row(row):
 
 
 def main():
-    with open("gencheck_benchmark.csv", encoding="utf-8") as f:
+    with open("benchmarks/gencheck_benchmark.csv", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     print(f"checking {len(rows)} urls ...", flush=True)
 
     with ThreadPoolExecutor(max_workers=40) as pool:
         results = list(pool.map(check_row, rows))
 
-    with open("csv_live_check.json", "w", encoding="utf-8") as f:
+    with open("benchmarks/csv_live_check.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=1)
 
     from collections import Counter

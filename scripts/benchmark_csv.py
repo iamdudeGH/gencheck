@@ -1,4 +1,4 @@
-"""GenCheck benchmark — CSV dataset (gencheck_benchmark.csv sample).
+"""GenCheck benchmark — CSV dataset (benchmarks/gencheck_benchmark.csv sample).
 
 The CSV has 412 labeled rows (312 fake from phishing databases, 100 real).
 Only 85 URLs are still live (phishing pages get taken down); the runnable
@@ -12,7 +12,7 @@ sample is every live fake (12) plus a balanced real set (16):
   - 8 recognizable top-sites (bbc, nature, arxiv, mozilla, pinterest,
     office, cnn, flickr)
 
-URLs are loaded from csv_live_check.json (the fetchability-check output) so
+URLs are loaded from benchmarks/csv_live_check.json (the fetchability-check output) so
 the exact long phishing URLs are preserved byte-for-byte. Brands not in the
 seed registry run through the v3 prompt's general-knowledge fallback.
 
@@ -29,7 +29,7 @@ from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 from genlayer_py.transactions import is_successful
 
-RESULTS_FILE = "benchmark_csv_results.json"
+RESULTS_FILE = "benchmarks/benchmark_csv_results.json"
 
 FAKE_DOMAINS = [
     "store.microsoft-surface.ru",
@@ -69,7 +69,7 @@ REAL_DOMAINS = [
 
 
 def load_sample():
-    with open("csv_live_check.json", encoding="utf-8") as f:
+    with open("benchmarks/csv_live_check.json", encoding="utf-8") as f:
         checked = json.load(f)
     by_domain = {c["domain"]: c for c in checked if c["fetchable"]}
     sample = []

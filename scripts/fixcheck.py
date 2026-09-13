@@ -20,7 +20,7 @@ import time
 from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 
-RESULTS_FILE = "fixcheck_results.json"
+RESULTS_FILE = "benchmarks/fixcheck_results.json"
 
 CASES = [
     # (url, brand, expected_real, note)

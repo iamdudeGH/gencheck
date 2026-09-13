@@ -11,8 +11,8 @@ does GenLayer's validator consensus correctly decide "real seller" vs
 - **Consensus:** `gl.eq_principle.prompt_comparative` — validators must agree
   on the `is_real` verdict
 - **Date:** 9 September 2026
-- **Raw data:** `benchmark_results.json`, `benchmark_recovered.json`,
-  `benchmark_retries.json` (per-case tx hashes, statuses, durations)
+- **Raw data:** `benchmarks/benchmark_results.json`, `benchmarks/benchmark_recovered.json`,
+  `benchmarks/benchmark_retries.json` (per-case tx hashes, statuses, durations)
 
 ## Methodology
 
@@ -169,7 +169,7 @@ set GENCHECK_PRIVATE_KEY=0x...   # funded burner key
 ```
 
 The script deploys a fresh contract, runs the labeled dataset through real
-consensus, and writes per-case results to `benchmark_results.json`.
+consensus, and writes per-case results to `benchmarks/benchmark_results.json`.
 
 ## Appendix: on-chain transaction hashes
 
@@ -260,7 +260,7 @@ distinct from the page content.
 # v3 — the claimed-brand prompt + fresh 21-case benchmark
 
 **Contract:** `0xe366d9D7A94A7533a693eA0861b887232f1219A8` · prompt
-`v3-claimed-brand` · 9 Sept 2026 · raw data `benchmark_v3_results.json`
+`v3-claimed-brand` · 9 Sept 2026 · raw data `benchmarks/benchmark_v3_results.json`
 
 ## The fix
 
@@ -315,7 +315,7 @@ v1/v2 false positives.** Median latency ~67s per validation
 (51–95s; the apple.com/iphone/ substitute took 372s through a slow fetch).
 
 Explorer: `https://explorer-studio-dev.genlayer.com/address/0xe366d9D7A94A7533a693eA0861b887232f1219A8`
-— per-tx hashes in `benchmark_v3_results.json` (the explorer's contract
+— per-tx hashes in `benchmarks/benchmark_v3_results.json` (the explorer's contract
 page may not list every tx; open by hash).
 
 ## Reproduce
@@ -332,11 +332,11 @@ set GENCHECK_PRIVATE_KEY=0x...
 
 **Contracts:** first pass `0xCe9131cbC10324541B844e197EB9bD53D683DBD3`,
 retry pass `0x94166f495dB604eadb65d7DdB268d3F7414263b5` · prompt
-`v3-claimed-brand` · 9 Sept 2026 · raw data `benchmark_csv_results.json`
+`v3-claimed-brand` · 9 Sept 2026 · raw data `benchmarks/benchmark_csv_results.json`
 
 ## Dataset reality check
 
-The provided `gencheck_benchmark.csv` has 412 rows (312 fake from phishing
+The provided `benchmarks/gencheck_benchmark.csv` has 412 rows (312 fake from phishing
 databases, 100 real). **300 of the 312 fake URLs are dead** (phishing pages
 are taken down fast — mostly ConnectionError/404). Only 85 URLs still serve
 content: 73 real, 12 fake. The benchmark sample is therefore **every live
@@ -389,7 +389,7 @@ the page is legitimate but unverifiable, so GenCheck conservatively blocks.
 
 ```bash
 set GENCHECK_PRIVATE_KEY=0x...
-.venv-deploy/Scripts/python scripts/check_csv.py      # fetchability check → csv_live_check.json
+.venv-deploy/Scripts/python scripts/check_csv.py      # fetchability check → benchmarks/csv_live_check.json
 .venv-deploy/Scripts/python scripts/benchmark_csv.py  # 28-case run on a fresh contract
 .venv-deploy/Scripts/python scripts/retry_csv.py      # retry failures/no-verdicts on a fresh contract
 ```

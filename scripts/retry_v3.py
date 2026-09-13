@@ -3,7 +3,7 @@
 music.apple.com [spotify] hit a consensus TIMEOUT and apple.com/shop/bag
 [apple] hit apple's 503s — neither cached a verdict, so re-running
 validate_checkout triggers a fresh consensus round. Results are appended to
-benchmark_v3_results.json with note "retry".
+benchmarks/benchmark_v3_results.json with note "retry".
 
 Usage:
     set GENCHECK_PRIVATE_KEY=0x...
@@ -17,7 +17,7 @@ import time
 from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 
-RESULTS_FILE = "benchmark_v3_results.json"
+RESULTS_FILE = "benchmarks/benchmark_v3_results.json"
 
 RETRY_CASES = [
     ("https://music.apple.com/us/browse", "spotify", "wrong_seller", False,

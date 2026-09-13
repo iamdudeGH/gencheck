@@ -135,14 +135,14 @@ def main():
         "phishing": [c for c in checked if not c["expected_real"]],
         "real": [c for c in checked if c["expected_real"]],
     }
-    with open("dataset_check.json", "w") as f:
+    with open("benchmarks/dataset_check.json", "w") as f:
         json.dump(dataset, f, indent=2)
 
     p_ok = sum(1 for c in dataset["phishing"] if c["fetchable"])
     r_ok = sum(1 for c in dataset["real"] if c["fetchable"])
     print(f"\nphishing fetchable: {p_ok}/{len(dataset['phishing'])}")
     print(f"real fetchable:     {r_ok}/{len(dataset['real'])}")
-    print(f"\nfull check: dataset_check.json")
+    print(f"\nfull check: benchmarks/dataset_check.json")
 
 
 if __name__ == "__main__":

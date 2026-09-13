@@ -13,7 +13,7 @@ import time
 from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 
-RESULTS_FILE = "benchmark_v3_results.json"
+RESULTS_FILE = "benchmarks/benchmark_v3_results.json"
 
 
 def extract_domain(url: str) -> str:

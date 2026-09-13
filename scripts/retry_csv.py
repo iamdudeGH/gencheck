@@ -5,7 +5,7 @@ domain, and the false negatives (mozilla.com, office.com) already have
 their wrong verdicts cached there — a re-run would just return the cache.
 A fresh contract forces a genuine re-judge for every retry case.
 
-Appends retries to benchmark_csv_results.json with a "retry" note.
+Appends retries to benchmarks/benchmark_csv_results.json with a "retry" note.
 
 Usage:
     set GENCHECK_PRIVATE_KEY=0x...
@@ -20,7 +20,7 @@ from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 from genlayer_py.transactions import is_successful
 
-RESULTS_FILE = "benchmark_csv_results.json"
+RESULTS_FILE = "benchmarks/benchmark_csv_results.json"
 
 
 def retry(fn, tries=8, base_delay=15):

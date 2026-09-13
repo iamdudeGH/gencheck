@@ -4,6 +4,7 @@
 .venv*
 examples
 artifacts
+benchmarks
 demo
 scripts
 tests

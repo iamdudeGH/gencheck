@@ -4,7 +4,7 @@ Dataset sources:
   - phishing: brand-impersonation pages from the live OpenPhish community
     feed (openphish.com/feed.txt) — brand clones on github.io / netlify /
     vercel / pages.dev, plus typosquats. All verified fetchable before the
-    run (see scripts/check_dataset.py, dataset_check.json).
+    run (see scripts/check_dataset.py, benchmarks/dataset_check.json).
   - wrong-seller: legitimate sites claimed under the wrong brand (v1/v2
     continuity cases).
   - real: legitimate checkout/account pages, including two brands
@@ -28,7 +28,7 @@ from genlayer_py import create_account, create_client
 from genlayer_py.chains import studio_devnet
 from genlayer_py.transactions import is_successful
 
-RESULTS_FILE = "benchmark_v3_results.json"
+RESULTS_FILE = "benchmarks/benchmark_v3_results.json"
 
 # brands registered on-chain via add_official_domain before the run
 NEW_BRANDS = {

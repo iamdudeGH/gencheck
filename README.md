@@ -224,11 +224,13 @@ real jury (validator addresses, votes, and the LLM each one ran).
 
 - Real transaction per check, ~0.00008 GEN each (measured) — see
   [`portal/DEPLOY.md`](portal/DEPLOY.md) for the cost guards
-- Pre-warmed examples: an Amazon-checkout lookalike on github.io
-  (**BLOCKED — wrong_seller**), real Amazon / Best Buy / Walmart / Target carts
-  (**CLEARED**), and sephora.com (**UNVERIFIABLE — fails closed**). They are
-  cached on-chain, so the contract answers them fast — but each still produces
-  a transaction with its own hash
+- Pre-warmed examples: an Amazon-checkout lookalike on github.io (**BLOCKED —
+  validators flagged it `scam`**), real Amazon / Best Buy / Walmart / Target
+  carts (**CLEARED**), and sephora.com (**UNVERIFIABLE — fails closed**). All
+  but sephora are cached on-chain, so the contract answers them from cache; an
+  `unverifiable` result is never cached (a fetch failure must be re-checked,
+  not remembered), so that one is fast because it fails fast. Either way each
+  check is its own transaction with its own hash
 - Serverless-ready: async submit/poll endpoints (`/api/submit`, `/api/status`)
   keep every request under ~5s, so it deploys to Vercel's free tier
 
@@ -258,8 +260,10 @@ The portal serves it at a stable URL, so pointing an agent at GenCheck is one li
 curl -s https://gencheck-live.vercel.app/skill.md
 ```
 
-It is also installable as a Claude Code skill (`.claude/skills/gencheck/SKILL.md`)
-and ships as the repo-root `SKILL.md`. All three copies are byte-identical.
+It is also installable as a Claude Code skill (`.claude/skills/gencheck/SKILL.md`),
+ships as the repo-root `SKILL.md`, and is vendored for the Claude Code plugin
+(`plugins/gencheck/skills/gencheck/SKILL.md`). All four copies — the served file
+included — are byte-identical.
 
 ## Integrating an AI Agent
 

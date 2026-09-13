@@ -92,7 +92,8 @@ This means validators must **agree on the verdict**, while tolerating difference
 ```
 gencheck/
 ├── contracts/
-│   └── shopping_validator.py   ← Main GenCheck Intelligent Contract
+│   ├── shopping_validator.py   ← v0.3.0 — the contract the direct tests cover
+│   └── shopping_validator_v5.py ← v0.5.0 — DEPLOYED (address above)
 ├── gencheck/                   ← importable client package
 │   ├── client.py               ← GenCheck class + fail-closed decide()
 │   └── mcp_server.py           ← MCP server (3 tools) for AI agents
@@ -226,11 +227,14 @@ real jury (validator addresses, votes, and the LLM each one ran).
   [`portal/DEPLOY.md`](portal/DEPLOY.md) for the cost guards
 - Pre-warmed examples: an Amazon-checkout lookalike on github.io (**BLOCKED —
   validators flagged it `scam`**), real Amazon / Best Buy / Walmart / Target
-  carts (**CLEARED**), and sephora.com (**UNVERIFIABLE — fails closed**). All
-  but sephora are cached on-chain, so the contract answers them from cache; an
-  `unverifiable` result is never cached (a fetch failure must be re-checked,
-  not remembered), so that one is fast because it fails fast. Either way each
-  check is its own transaction with its own hash
+  carts (**CLEARED**), and sephora.com (**UNVERIFIABLE — fails closed**). Two of
+  the six are cached on-chain already (the clone and `www.amazon.com`) and
+  return in seconds; the rest run a fresh round. `www.walmart.com` and
+  `www.target.com` can never warm — v5 refuses to let a caller claiming one
+  brand overwrite an entry stored under another, and both are already stored
+  under different brands — and Sephora's round fails fast, because a fetch
+  failure is never cached. Either way every check is a real transaction with
+  its own hash
 - Serverless-ready: async submit/poll endpoints (`/api/submit`, `/api/status`)
   keep every request under ~5s, so it deploys to Vercel's free tier
 
@@ -415,10 +419,12 @@ unbypassable even for a compromised agent. Deliberately out of scope for now.
 | Method | Type | Description |
 |---|---|---|
 | `validate_checkout(checkout_url, brand)` | write | Validate a checkout URL against the brand's official site; caches the verdict |
-| `add_official_domain(brand, domain)` | write | Register a new official brand domain in the persisted registry |
+| `add_official_domain(brand, domain)` | write | **admin-only** — register a new official brand domain in the persisted registry |
+| `invalidate(domain)` | write | **admin-only** — drop a cached verdict so the domain is judged again |
 | `is_site_validated(domain)` | view | `true` if the domain was validated and deemed real |
 | `get_cached_result(domain)` | view | Full cached verdict for a domain (raises `UserError` if unvalidated) |
 | `get_official_domain(brand)` | view | Look up the registered official domain for a brand |
+| `get_admin()` | view | The address allowed to write the registry and clear cached verdicts |
 
 ### Verdict Format
 
@@ -434,8 +440,15 @@ unbypassable even for a compromised agent. Deliberately out of scope for now.
 
 `confidence` is an integer percent (0-100) — the runner's calldata encoder
 cannot serialize floats, so the contract normalizes the LLM's `0.99` to `99`
-defensively (missing/non-numeric becomes 0). `verdict` ∈ `real` | `scam` |
-`wrong_seller` | `unsure` | `unverifiable`:
+defensively (missing/non-numeric becomes 0).
+
+`verdict` comes from **two** vocabularies, which matters if you parse it. The
+LLM is asked for one of `real` | `scam` | `wrong_seller` | `unsure`; the
+contract adds two of its own — `unverifiable` when validators could not fetch
+the page, and `blocked` on a **cache hit**, because the v5 cache stores only
+`is_real` / `confidence` / `brand` and cannot restate which kind of block the
+original run was. `blocked` is therefore what the portal shows for an
+already-judged lookalike, and it carries no detection claim of its own.
 
 - `wrong_seller` — the page is a legitimate, well-known site but **not the
   claimed brand's** seller (e.g. walmart.com claimed as "amazon"); the v2
@@ -443,8 +456,10 @@ defensively (missing/non-numeric becomes 0). `verdict` ∈ `real` | `scam` |
   blocked rather than allowed.
 - `unverifiable` — validators could not fetch the checkout page (bot-blocking
   or offline). The contract catches the fetch failure inside the consensus
-  closure and returns an explicit block verdict instead of erroring, so the
-  block is cacheable and retries are free.
+  closure and returns an explicit block verdict instead of erroring. It is
+  deliberately **never cached** (v5's write guard excludes it): a domain that
+  was briefly down or bot-blocking must be re-checked on the next call, not
+  remembered as blocked forever, so it costs a fresh round every time.
 
 The shopping agent should treat everything other than `real` — `scam`,
 `wrong_seller`, `unsure`, **and** `unverifiable` — as **block pay**.

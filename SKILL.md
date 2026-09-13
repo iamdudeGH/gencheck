@@ -191,9 +191,11 @@ The portal also serves this file at `GET /skill.md`.
   hash**, even when the contract answers from its own domain cache. Use it when you
   need on-chain proof, or when the domain has never been judged.
 
-On-chain verdicts are cached permanently, so a merchant is only ever fully
-re-investigated once per contract — but note that the contract is immutable, so a
-verdict that was wrong cannot be re-judged on the same deployment.
+On-chain verdicts are cached per `(domain, brand)`, so a merchant is only ever
+fully re-investigated once — but note that an integrating agent cannot clear an
+entry. The deployed contract has an admin-gated `invalidate(domain)` that drops a
+cached verdict so the domain is judged again; without the owner's admin key, a
+wrong verdict stands on that deployment.
 
 ## What validators actually do
 

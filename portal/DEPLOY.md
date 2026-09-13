@@ -100,34 +100,47 @@ sleeps after inactivity — fine for a demo.)
 
 ## Ops notes
 
-- Verdicts for a domain are cached **on-chain forever** (immutable contract).
-  A misjudged domain cannot be re-judged on the same contract — if that
-  becomes a problem, deploy a fresh contract with `scripts/deploy_final.py`
-  and point `GENCHECK_CONTRACT` at it.
+- Verdicts for a domain are cached on-chain until something clears them. The v5
+  contract added an admin-gated `invalidate(domain)` — `get_admin()` returns the
+  address allowed to call it — which drops an entry so the domain is judged
+  again. That is the recovery path for a domain blacklisted by a transient
+  fetch failure, and it is how the demo transcript was regenerated after both
+  of its offers had been cached. Without the admin key a misjudged domain does
+  stand for the life of the contract, and the remedy is a fresh deploy with
+  `scripts/deploy_final.py` plus `GENCHECK_CONTRACT` pointed at it.
 - Rate-limit state is in-process memory — per serverless instance on Vercel,
   which is fine for a demo (the real cost guard is the wallet balance).
 - Pre-warmed domains on the v5 contract, read back from the chain rather than
-  copied from an earlier contract's list:
+  copied from an earlier contract's list. Re-read it before trusting this
+  table: any check with a funded key writes new rows, and the clone URL gets
+  replaced as phishing pages rot.
 
-  | domain | cached brand | cached verdict |
+  | domain | cached brand | cache says |
   |---|---|---|
   | `www.amazon.com` | amazon | `is_real` true — cleared |
   | `walmart.com` | walmart | `is_real` true — cleared |
   | `target.com` | target | `is_real` true — cleared |
-  | `www.walmart.com` | **amazon** | `is_real` false — blocked (wrong_seller) |
-  | `www.target.com` | **paypal** | `is_real` false — blocked (wrong_seller) |
+  | `sarthforge.github.io` | amazon | `is_real` false — blocked |
+  | `www.walmart.com` | **amazon** | `is_real` false — blocked |
+  | `www.target.com` | **paypal** | `is_real` false — blocked |
 
-  Note what that table means for the demo chips. The cache is keyed on
+  The v5 cache stores only `is_real` / `confidence` / `brand` — never a verdict
+  word — so a row can say "blocked" but not which kind of block it was. The
+  `wrong_seller` label the last two rows used to carry was inferred from an
+  earlier contract's vocabulary, not read off this one.
+
+  Note what that table means for the demo chips. Of the six in `EXAMPLES`, only
+  the github.io clone and `www.amazon.com` are warm. The cache is keyed on
   `(domain, brand)` as of v5, so `www.walmart.com/cart [walmart]` does **not**
   hit the entry stored under brand `amazon` — it runs a fresh consensus round.
-  That is the v5 fix working, not a bug, but it costs ~60s and needs a key.
-  The two rows worth relying on for an instant, key-free demo are
-  `www.amazon.com` and `walmart.com`/`target.com` (apex).
+  That is the v5 fix working, not a bug.
 
-  Everything else in `EXAMPLES` — the github.io Amazon clone, Best Buy, and
-  Sephora — is **not** pre-warmed and will submit a real transaction.
-  `unverifiable` results are deliberately never cached, so Sephora can never
-  become warm; it will always cost a round.
+  Two of them can never warm at all. The v5 write guard refuses to let a caller
+  claiming one brand overwrite an entry stored under another, so
+  `www.walmart.com [walmart]` and `www.target.com [target]` miss their
+  mismatched entries on every check and re-run consensus forever. Sephora is
+  the same but for a different reason: `unverifiable` results are deliberately
+  never cached, so a fetch failure is re-checked rather than remembered.
 
   To warm a domain, run the demo or a single validation once with a funded key
   and the result persists. Phishing URLs rot, so the clone URL in `EXAMPLES`

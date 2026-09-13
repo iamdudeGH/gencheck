@@ -660,18 +660,20 @@
         <h2 style="margin-top:6px">Measured, not projected</h2>
       </div>
       <p>Live URLs through real validator consensus on studio-dev. Methodology and the
-        v1 → v3 prompt-fix arc are in the repo.</p>
+        v1 → v5 prompt-fix arc are in the repo.</p>
     </div>
     <div class="stats">
-      <div class="stat"><b>21/21</b><div class="k">labeled URL set</div>
-        <p>Live OpenPhish phishing pages, wrong-seller sites, and legitimate checkouts —
-          all correct under the v3 prompt.</p></div>
-      <div class="stat"><b>96.0%</b><div class="k">412-row dataset</div>
-        <p>A 412-row labeled CSV benchmark scored 24/25 verdicts correct.</p></div>
+      <div class="stat"><b>93.9%</b><div class="k">50 labeled URLs</div>
+        <p>46 of 49 verdicts correct on the live contract — live OpenPhish phishing
+          pages, wrong-seller sites, and legitimate checkouts.</p></div>
       <div class="stat"><b>0</b><div class="k">false positives</div>
-        <p>No legitimate merchant was ever blocked in the labeled evaluation.</p></div>
-      <div class="stat"><b>0</b><div class="k">phishing allowed</div>
-        <p>Not one known phishing URL was cleared for payment.</p></div>
+        <p>Not one of 23 lookalikes was cleared for payment.</p></div>
+      <div class="stat"><b>14/23</b><div class="k">blocks by detection</div>
+        <p>The other 9 failed closed or came back <code>unsure</code>. This run
+          separates the two, so a dead page is not counted as a catch.</p></div>
+      <div class="stat"><b>3</b><div class="k">false negatives</div>
+        <p>Real checkouts blocked: two bot-block the validators, one was a genuine
+          misjudgement. Disclosed rather than hidden.</p></div>
     </div>
   </div>
 </section>

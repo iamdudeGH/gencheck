@@ -1,5 +1,114 @@
 # GenCheck Accuracy Benchmark
 
+**The live contract is v5.** Its result is the first section below. Everything
+after it is the v1 → CSV arc that led there, kept as the record. Those earlier
+runs store only `is_real`, so their block rates cannot separate a detection from
+a page that would not load — a caveat marked at each one.
+
+---
+
+# v5 — the live contract (current)
+
+**Contract:** `0xD914Bf44b78df2CC3FeFf343769800E11690288B` · prompt
+`v5-admin-gated-cache-integrity` · 13 Sept 2026 · raw data
+`benchmarks/benchmark_v5_results.json`
+
+50 labeled cases through real consensus on the live contract: 21 phishing,
+3 wrong-seller, 26 real. 49 produced a verdict — `music.apple.com` was skipped
+by operator request after stalling twice. 46 were correct.
+
+| Metric | Value |
+|---|---|
+| Cases attempted | 50 |
+| Verdicts produced | 49 |
+| **Accuracy on verdicts** | **46/49 = 93.9%** |
+| False positives (fake allowed) | **0** |
+| False negatives (real blocked) | **3** |
+| Phishing blocked | 21/21 |
+| Wrong seller blocked | 2/2 |
+| Real allowed | 23/26 |
+| `consensus_ok` | 50/50 |
+| Verdicts served from cache | 3 |
+
+## How the 23 blocks were actually reached
+
+This is the number the earlier runs could not produce. `benchmark_results.json`,
+`benchmark_v3_results.json` and `benchmark_csv_results.json` each store only
+`is_real`, so a block earned by *catching* a scam and a block earned by *failing
+to load the page* are the same value in those files. They are not the same
+result, and only one of them is detection.
+
+| Mechanism | Count |
+|---|---|
+| Detection (`scam` / `wrong_seller`) | **14/23** |
+| Fail-closed (page unreachable → `unverifiable`) | 7/23 |
+| `unsure` | 2/23 |
+
+The v5 result file stores `verdict` per case, so this split is checkable rather
+than asserted. **Any block reporting confidence 0 is fail-closed, not a catch.**
+
+Three of the 7 fail-closed blocks matter for how this project is read:
+`vardhan2k3.github.io`, `rajesh207k.github.io` and `sukhpreetkaur2406.github.io`
+— the Amazon clones — now return **404 "Site not found" from GitHub Pages**.
+They pass by failing closed and detect nothing. `vardhan2k3.github.io` is the
+scenario wired into `portal/app.py`, `demo/shopping_agent.py` and the README, so
+the headline demo case is currently a dead page.
+
+## The 3 false negatives
+
+| Domain | Verdict | Cause |
+|---|---|---|
+| sephora.com/checkout | `unverifiable` | bot-blocks the validators |
+| costco.com/checkout | `unverifiable` | bot-blocks the validators |
+| office.com | **`wrong_seller`** | genuine misjudgement, confidence 93 |
+
+Two are the documented fail-closed price: a real page the validators cannot
+reach is indistinguishable from one that will not load, and the contract blocks
+both. `portal/app.py` already expects `unverifiable` for sephora, so this is a
+known cost rather than a surprise.
+
+`office.com` is the one genuine error, and it repeats a v3/CSV failure exactly.
+The dataset labels the brand as the generic string "office", and a
+domain-ownership rule correctly observes that office.com is not a domain
+belonging to a brand called "office" — the same reasoning the v3 CSV run
+recorded. It is a labelling artifact in the dataset, and it is still scored as a
+failure here rather than explained away, because the contract has no way to know
+the label is wrong. Any agent trusting a caller-supplied brand string inherits
+this.
+
+## v5 contract integrity — checked on chain, not in the source
+
+The defects v5 exists to close, verified against what the live contract actually
+did rather than what it says it does:
+
+| Check | Result |
+|---|---|
+| Cache entries whose stored brand != the claimed brand | **0** |
+| `unverifiable` results cached | **0/7** |
+| Verdicts served from cache | 3/50 |
+| `consensus_ok` | 50/50 |
+
+v4 keyed the cache on domain alone, so a verdict judged for one brand could be
+served for another; v4 also cached a fetch failure as `is_real: false`, which
+permanently blacklisted any domain that was briefly down or that blocks
+datacenter traffic. Both are confirmed absent in the live run. The 3 cache hits
+include two deliberate repeats (`target.com`, `walmart.com`) that exist to
+exercise the path.
+
+## Notable
+
+- **`nike.com/checkout` passed as `real` in 62.8s.** This case stalled the run
+  twice across two sessions and produced a wrong intermediate diagnosis — that a
+  transaction stuck at the head of the account's nonce queue was blocking every
+  later one. It was not. The case simply outlasted the harness cap, and once
+  that cap was bounded it resolved normally.
+- **`mozilla.com` took 351s**, roughly 6× the median, and still resolved
+  correctly. Latency on studio-dev remains the dominant source of variance.
+
+---
+
+# v1 — the original 18-case run
+
 **Question:** When a shopping agent is about to pay a checkout URL, how often
 does GenLayer's validator consensus correctly decide "real seller" vs
 "lookalike/wrong-brand scam"?
@@ -302,6 +411,14 @@ a real, currently-live phishing/clone page:
 | Real (incl. subdomains, unregistered-brand fallback) | 10/10 allowed | 100% |
 | **Total** | **21/21** | **100%** |
 
+> **Caveat added alongside v5.** This run stores only `is_real`. A block earned
+> by detection and a block earned by a page failing to load are the same value in
+> `benchmark_v3_results.json`, so 100% here is an upper bound on detection, not a
+> measurement of it. When v5 measured the two separately, 14 of its 23 blocks
+> were detections and 7 were unreachable pages. Three of the eight phishing cases
+> below — the `*.github.io` Amazon clones — now return 404 from GitHub Pages, so
+> today they would pass by failing closed rather than by being caught.
+
 No-verdict cases (safe: block by default, no cache entry):
 
 | Case | Cause |
@@ -355,6 +472,13 @@ for the known GenVM web-module crash — and 8 recognizable top sites).
 | False positives (phishing allowed) | **0** |
 | False negatives (real blocked) | 1 (office.com) |
 | No verdict (safe block by default) | 3 |
+
+> **Caveat added alongside v5.** As with v3, this run stores only `is_real`, and
+> the phishing row above counts a page that would not load the same as a page
+> that was caught. The line beneath the table already says "blocked or
+> safe-blocked" — those are different results, and only one is detection. 11/11
+> is therefore an upper bound. The v5 run is the first in this document that can
+> tell them apart.
 
 All 12 live phishing URLs were blocked or safe-blocked — including the
 `unknown`-brand rows where the prompt falls back to judging the page on its

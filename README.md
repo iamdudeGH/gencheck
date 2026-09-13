@@ -10,12 +10,15 @@ Before money moves, GenCheck asks GenLayer validators to open a checkout URL and
 - ❌ Fake → block pay
 - ⚠️ Unsure → block pay (conservative default)
 
-> 📊 **Accuracy benchmark (v3 prompt):** 21 labeled URLs — live OpenPhish
-> phishing pages, wrong-seller sites, and legitimate checkouts — through real
-> validator consensus: **21/21 correct (100%)**, 0 false negatives, 0 false
-> positives. A 412-row labeled CSV dataset benchmark scored **96.0% (24/25
-> verdicts, zero phishing URLs allowed)**. See **[BENCHMARK.md](BENCHMARK.md)**
-> for the v1 → v3 prompt-fix arc (v1: 82.4% with 3 wrong-brand false positives).
+> 📊 **Accuracy benchmark (v5, the live contract):** 50 labeled URLs — live
+> OpenPhish phishing pages, wrong-seller sites, and legitimate checkouts —
+> through real validator consensus: **46/49 verdicts correct (93.9%)**,
+> **0 false positives**, **3 false negatives**. The three are named, not buried:
+> sephora.com and costco.com bot-block the validators (fail-closed
+> `unverifiable`), and office.com was a genuine misjudgement. Every one of the
+> 23 lookalikes was blocked; not one was cleared for payment. See
+> **[BENCHMARK.md](BENCHMARK.md)** for this run and the v1 → v3 prompt-fix arc
+> (v1: 82.4% with 3 wrong-brand false positives, v3: 21/21).
 
 **Live contract (studio-dev):** `0xD914Bf44b78df2CC3FeFf343769800E11690288B` —
 [View on explorer](https://explorer-studio-dev.genlayer.com/address/0xD914Bf44b78df2CC3FeFf343769800E11690288B)

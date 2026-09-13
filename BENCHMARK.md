@@ -30,7 +30,7 @@ by operator request after stalling twice. 46 were correct.
 | `consensus_ok` | 50/50 |
 | Verdicts served from cache | 3 |
 
-## How the 23 blocks were actually reached
+## How the 23 lookalikes were blocked
 
 This is the number the earlier runs could not produce. `benchmark_results.json`,
 `benchmark_v3_results.json` and `benchmark_csv_results.json` each store only
@@ -38,14 +38,20 @@ This is the number the earlier runs could not produce. `benchmark_results.json`,
 to load the page* are the same value in those files. They are not the same
 result, and only one of them is detection.
 
-| Mechanism | Count |
-|---|---|
-| Detection (`scam` / `wrong_seller`) | **14/23** |
-| Fail-closed (page unreachable → `unverifiable`) | 7/23 |
-| `unsure` | 2/23 |
+| Mechanism | Of the 23 lookalikes | Of all 26 blocks |
+|---|---|---|
+| Detection (`scam` / `wrong_seller`) | **14** | 15 |
+| Fail-closed (page unreachable → `unverifiable`) | 7 | 9 |
+| `unsure` | 2 | 2 |
+
+Two denominators, because they answer different questions. The 23 lookalikes say
+how well the gate detects; the 26 include the 3 real checkouts it wrongly
+blocked, which is what a legitimate customer experiences. Quoting one without
+naming it is how `14/23` and `15/26` read as a contradiction.
 
 The v5 result file stores `verdict` per case, so this split is checkable rather
-than asserted. **Any block reporting confidence 0 is fail-closed, not a catch.**
+than asserted — `scripts/benchmark_v5.py` prints both. **Any block reporting
+confidence 0 is fail-closed, not a catch.**
 
 Three of the 7 fail-closed blocks matter for how this project is read:
 `vardhan2k3.github.io`, `rajesh207k.github.io` and `sukhpreetkaur2406.github.io`
@@ -104,6 +110,31 @@ exercise the path.
   that cap was bounded it resolved normally.
 - **`mozilla.com` took 351s**, roughly 6× the median, and still resolved
   correctly. Latency on studio-dev remains the dominant source of variance.
+
+## Reproduce
+
+```bash
+set GENCHECK_PRIVATE_KEY=0x...
+.venv-deploy/Scripts/python scripts/benchmark_v5.py
+```
+
+This is the only harness here that targets the deployed contract — it deploys
+nothing and benchmarks whatever `load_contract_address()` resolves, so it
+follows the live pointer. `benchmark_v3.py` and `benchmark_csv.py` each deploy
+their own contract from `contracts/shopping_validator.py`, which is the v4
+build, so neither can measure v5.
+
+It writes per-case results to `benchmarks/benchmark_v5_results.json` after every
+case and skips cases that already have a verdict, so an interrupted run resumes
+rather than restarting. `music.apple.com` is in `SKIP_URLS` and is reported as
+skipped rather than scored.
+
+Two behaviours worth knowing before editing it. `retry()` treats connection
+errors as transient — the earlier harnesses did not, which is why a mid-run
+`ConnectionResetError` aborted them outright. `wait_bounded()` deliberately does
+*not* retry `Timeout`: `wait_for_finalization` already polls for 12.5 minutes, so
+treating its timeout as transient turns one stalled case into roughly two hours
+and holds every later case behind it.
 
 ---
 

@@ -209,7 +209,7 @@ readable from the transaction.
 | | |
 |---|---|
 | Network | studio-dev (chain 61997) — GEN is free from the faucet |
-| Contract | `0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D` |
+| Contract | `0xD914Bf44b78df2CC3FeFf343769800E11690288B` |
 | Explorer | https://explorer-studio-dev.genlayer.com |
 | Portal (demo) | https://gencheck-live.vercel.app |
 | Source | https://github.com/iamdudeGH/gencheck |

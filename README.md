@@ -17,8 +17,8 @@ Before money moves, GenCheck asks GenLayer validators to open a checkout URL and
 > verdicts, zero phishing URLs allowed)**. See **[BENCHMARK.md](BENCHMARK.md)**
 > for the v1 → v3 prompt-fix arc (v1: 82.4% with 3 wrong-brand false positives).
 
-**Live contract (studio-dev):** `0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D` —
-[View on explorer](https://explorer-studio-dev.genlayer.com/address/0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D)
+**Live contract (studio-dev):** `0xD914Bf44b78df2CC3FeFf343769800E11690288B` —
+[View on explorer](https://explorer-studio-dev.genlayer.com/address/0xD914Bf44b78df2CC3FeFf343769800E11690288B)
 
 ---
 
@@ -165,18 +165,21 @@ Three issues were hit and resolved while setting this up on Windows 11:
 
 ### Deployed on Studio Dev (Agent Tank network)
 
-- **Final contract (v3 prompt + unverifiable fix)**: `0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D`
+- **Final contract (v5 — admin-gated registry, brand-scoped cache)**: `0xD914Bf44b78df2CC3FeFf343769800E11690288B`
 - **Network**: studio-dev preview, chain ID 61997
 - **RPC**: `https://studio-dev.genlayer.com/api`
-- **Explorer**: `https://explorer-studio-dev.genlayer.com/address/0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D`
+- **Explorer**: `https://explorer-studio-dev.genlayer.com/address/0xD914Bf44b78df2CC3FeFf343769800E11690288B`
 
 Earlier contracts are kept as the benchmark evidence trail (see
 [BENCHMARK.md](BENCHMARK.md)): v1 baseline `0x04a9cCB5...0917d`, v2 fix-check
 `0x12E17B83...8559`, v3 benchmark `0xe366d9D7...219A8`, CSV benchmark
 `0xCe9131cb...DBD3` (+ retry contract `0x94166f49...263b5`), demo-run
-contract `0xC516b95d...BEb7`. The original manual deploy
-`0x59c12366...D6b5F3` predates the prompt fixes — contracts are immutable,
-so it still runs the v1 prompt.
+contract `0xC516b95d...BEb7`, v4 unverifiable-verdict
+`0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D` — v4 is the one that exposed the
+three unauthenticated paths v5 closes, and since contracts are immutable that
+deployment is still vulnerable; nothing should point at it. The original manual
+deploy `0x59c12366...D6b5F3` predates the prompt fixes and still runs the v1
+prompt.
 
 ### Interacting without the CLI (genlayer-py 0.19 RC)
 

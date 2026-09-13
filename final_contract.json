@@ -1,7 +1,7 @@
 {
-  "contract": "0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D",
-  "deploy_tx": "0x79a45ee7d99f6a4aacd06dd5abed4d1a3a4ae61321d515359954d3a2f77ebfe4",
-  "prompt_version": "v4-unverifiable-verdict",
+  "contract": "0xD914Bf44b78df2CC3FeFf343769800E11690288B",
+  "deploy_tx": "0x5d554cf27b75d225e923f7f6f83b8d06fa5fefd5a47445f30304df001487db06",
+  "prompt_version": "v5-admin-gated-cache-integrity",
   "network": "studio-dev",
   "result_name": "MAJORITY_AGREE"
 }

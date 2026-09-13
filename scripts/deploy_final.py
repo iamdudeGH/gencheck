@@ -1,4 +1,9 @@
-"""Deploy the final GenCheck contract (v3 claimed-brand prompt) to studio-dev.
+"""Deploy the GenCheck contract to studio-dev.
+
+Deploys contracts/shopping_validator_v5.py — the admin-gated build that closes
+three unauthenticated paths to a permanent, immutable bad verdict: the
+registry had no caller check, the cache key held no brand, and a fetch failure
+was cached. See the v0.5.0 docstring in the contract for the full list.
 
 Usage:
     set GENCHECK_PRIVATE_KEY=0x...
@@ -19,7 +24,7 @@ def main():
 
     estimate = client.estimate_transaction_fees()
     tx_id = client.deploy_contract(
-        code=open("contracts/shopping_validator.py", encoding="utf-8").read(),
+        code=open("contracts/shopping_validator_v5.py", encoding="utf-8").read(),
         fees={"distribution": estimate["distribution"],
               "feeValue": estimate["feeValue"]},
     )
@@ -40,7 +45,7 @@ def main():
           flush=True)
 
     info = {"contract": contract, "deploy_tx": tx_id,
-            "prompt_version": "v4-unverifiable-verdict",
+            "prompt_version": "v5-admin-gated-cache-integrity",
             "network": "studio-dev", "result_name": receipt.get("result_name")}
     with open("final_contract.json", "w") as f:
         json.dump(info, f, indent=2)

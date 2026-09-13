@@ -12,11 +12,11 @@ The same two values are duplicated here as the fallback. Precedence is:
 Keep them in sync with `final_contract.json` and `benchmark_fees.json`.
 """
 
-# GenCheck on studio-dev (chain 61997), deployed 9 Sept 2026. This is the v4
-# contract carrying the unverifiable-verdict fix — deliberately not the earlier
-# pre-fix deployments recorded in the benchmark lineage, which are immutable and
-# still wrong.
-DEFAULT_CONTRACT = "0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D"
+# GenCheck on studio-dev (chain 61997). v5, deployed 13 Sept 2026 — the
+# admin-gated build. Deliberately not the earlier deployments recorded in the
+# benchmark lineage: they are immutable and still carry the unauthenticated
+# registry write / brand-less cache key / cached-fetch-failure defects.
+DEFAULT_CONTRACT = "0xD914Bf44b78df2CC3FeFf343769800E11690288B"
 
 # Fee distribution for validate_checkout. The SDK's own defaults
 # (`estimate_transaction_fees`) hit BudgetTooLow / FeesDistributionMissing on

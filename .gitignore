@@ -10,6 +10,11 @@ venv/
 # is needed by the repo, the portal, or the deploy — keep it local.
 artifacts/
 
+# A local scrape of the GenLayer docs site (docs.genlayer.com). It is someone
+# else's documentation, not this project's source, and it is 860 KB of it.
+# Nothing in the repo, the portal, or the deploy reads it.
+full-documentation.txt
+
 __pycache__/
 *.py[cod]
 *.egg-info/

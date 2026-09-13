@@ -464,7 +464,9 @@ confidence.
 
 ## Agent Tank Hackathon
 
-Built for the [GenLayer Agent Tank Hackathon](https://portal.genlayer.foundation/agent-tank) — Builder track.
+Built for the [GenLayer Agent Tank Hackathon](https://portal.genlayer.foundation/agent-tank)
+— **Agentic Commerce Infrastructure** track (payments, escrow, identity and
+insurance for agents trading with agents).
 
 - Build window: 3–17 September 2026
 - Winners announced: 25 September 2026

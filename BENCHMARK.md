@@ -56,9 +56,11 @@ confidence 0 is fail-closed, not a catch.**
 Three of the 7 fail-closed blocks matter for how this project is read:
 `vardhan2k3.github.io`, `rajesh207k.github.io` and `sukhpreetkaur2406.github.io`
 — the Amazon clones — now return **404 "Site not found" from GitHub Pages**.
-They pass by failing closed and detect nothing. `vardhan2k3.github.io` is the
-scenario wired into `portal/app.py`, `demo/shopping_agent.py` and the README, so
-the headline demo case is currently a dead page.
+They pass by failing closed and detect nothing. `vardhan2k3.github.io` was the
+scenario wired into `portal/app.py` and `demo/shopping_agent.py`, and named by
+the README; both code paths have since been repointed at a live clone from the
+same feed. The README describes the scenario generically ("an Amazon-checkout
+lookalike on github.io") and needed no change.
 
 ## The 3 false negatives
 

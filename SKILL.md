@@ -98,7 +98,7 @@ stdout is a single JSON object if you would rather parse than check exit codes:
 ```json
 { "status": "consensus_verdict", "is_real": false, "verdict": "wrong_seller",
   "confidence": 99, "decision": "BLOCK", "decision_reason": "…",
-  "reasons": ["The checkout URL's domain is vardhan2k3.github.io, which is not amazon.com …"] }
+  "reasons": ["The checkout URL's domain is shop.example.com, which is not amazon.com …"] }
 ```
 
 Free reads, no key needed — use these before spending a consensus round:

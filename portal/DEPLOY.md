@@ -106,6 +106,30 @@ sleeps after inactivity — fine for a demo.)
   and point `GENCHECK_CONTRACT` at it.
 - Rate-limit state is in-process memory — per serverless instance on Vercel,
   which is fine for a demo (the real cost guard is the wallet balance).
-- Pre-warmed domains on the final contract (instant demo results, no key
-  needed): `vardhan2k3.github.io`, `www.amazon.com`, `www.bestbuy.com`,
-  `www.walmart.com`, `www.target.com`, `sephora.com`.
+- Pre-warmed domains on the v5 contract, read back from the chain rather than
+  copied from an earlier contract's list:
+
+  | domain | cached brand | cached verdict |
+  |---|---|---|
+  | `www.amazon.com` | amazon | `is_real` true — cleared |
+  | `walmart.com` | walmart | `is_real` true — cleared |
+  | `target.com` | target | `is_real` true — cleared |
+  | `www.walmart.com` | **amazon** | `is_real` false — blocked (wrong_seller) |
+  | `www.target.com` | **paypal** | `is_real` false — blocked (wrong_seller) |
+
+  Note what that table means for the demo chips. The cache is keyed on
+  `(domain, brand)` as of v5, so `www.walmart.com/cart [walmart]` does **not**
+  hit the entry stored under brand `amazon` — it runs a fresh consensus round.
+  That is the v5 fix working, not a bug, but it costs ~60s and needs a key.
+  The two rows worth relying on for an instant, key-free demo are
+  `www.amazon.com` and `walmart.com`/`target.com` (apex).
+
+  Everything else in `EXAMPLES` — the github.io Amazon clone, Best Buy, and
+  Sephora — is **not** pre-warmed and will submit a real transaction.
+  `unverifiable` results are deliberately never cached, so Sephora can never
+  become warm; it will always cost a round.
+
+  To warm a domain, run the demo or a single validation once with a funded key
+  and the result persists. Phishing URLs rot, so the clone URL in `EXAMPLES`
+  needs re-checking periodically; a replacement should be taken from
+  <https://openphish.com/feed.txt>.

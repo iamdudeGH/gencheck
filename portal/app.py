@@ -59,8 +59,16 @@ _validation_times: dict[str, list[float]] = defaultdict(list)
 _global_starts: list[float] = []
 
 EXAMPLES = [
+    # A live Amazon lookalike, taken from the OpenPhish community feed. The
+    # previous demo target (vardhan2k3.github.io) began returning 404 from
+    # GitHub Pages, so it was still blocking — but by failing closed, not by
+    # detecting anything. A demo that blocks a dead page demonstrates nothing,
+    # which is why the URL was swapped rather than left. Phishing pages get
+    # taken down fast: if this one starts 404ing, pull a replacement from
+    # https://openphish.com/feed.txt (any live *.github.io Amazon clone)
+    # instead of leaving a dead page wired into the demo.
     {"label": "Amazon checkout clone on github.io",
-     "url": "https://vardhan2k3.github.io/Amazon-Clone-Project/checkout.html",
+     "url": "https://sarthforge.github.io/amazon-clone/cart.html",
      "brand": "amazon", "expected": "blocked"},
     {"label": "Real Amazon cart",
      "url": "https://www.amazon.com/gp/cart/view.html",
@@ -87,12 +95,13 @@ EXAMPLES = [
 # the real reasoning for the pre-warmed example domains. Cache still wins:
 # is_real is always taken from the chain, never from this table.
 KNOWN_VERDICTS = {
-    "vardhan2k3.github.io": {
-        "is_real": False, "verdict": "wrong_seller", "confidence": 99,        "reasons": [
-            "The checkout URL's domain is vardhan2k3.github.io, which is not amazon.com nor a subdomain of amazon",
-            "GitHub Pages (github.io) is a separate hosting service unrelated to Amazon.",
-        ],
-    },
+    # The vardhan2k3.github.io entry was removed along with the URL swap above.
+    # Its guard compares only `is_real`, and the domain now 404s — so it returns
+    # `unverifiable` with is_real False, which matched this entry's is_real
+    # False and attached wrong_seller reasoning to what was really a fail-closed
+    # fetch failure. Do not add an entry for the new demo domain until a real
+    # consensus run has produced its reasons: these are decoded on-chain output,
+    # and writing them by hand would put fabricated evidence on the page.
     "www.amazon.com": {
         "is_real": True, "verdict": "real", "confidence": 99,
         "reasons": [

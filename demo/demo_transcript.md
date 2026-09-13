@@ -1,3 +1,17 @@
+> **Stale — recorded before the v5 deploy, and before the demo URL swap.** This
+> is the captured output of a real run, so it is left intact rather than edited;
+> editing a transcript by hand would make it a fabricated record. Two things in
+> it no longer hold:
+>
+> - it names the **v4** contract `0x61153C8d…`, not the live v5 contract
+> - its offer 1, `vardhan2k3.github.io`, now returns **404** from GitHub Pages,
+>   so that block came from the contract failing closed, not from detection —
+>   the demo appeared to work while demonstrating nothing. `shopping_agent.py`
+>   now points at a live clone instead.
+>
+> Regenerate with a funded key:
+> `.venv-deploy/Scripts/python demo/shopping_agent.py`
+
 ```text
 ========================================================================
 GENCHECK SHOPPING AGENT — end-to-end demo (studio-dev, live consensus)

@@ -27,7 +27,7 @@ by operator request after stalling twice. 46 were correct.
 | Phishing blocked | 21/21 |
 | Wrong seller blocked | 2/2 |
 | Real allowed | 23/26 |
-| `consensus_ok` | 50/50 |
+| `consensus_ok` | 49/49 |
 | Verdicts served from cache | 3 |
 
 ## How the 23 lookalikes were blocked
@@ -94,7 +94,7 @@ did rather than what it says it does:
 | Cache entries whose stored brand != the claimed brand | **0** |
 | `unverifiable` results cached | **0/7** |
 | Verdicts served from cache | 3/50 |
-| `consensus_ok` | 50/50 |
+| `consensus_ok` | 49/49 |
 
 v4 keyed the cache on domain alone, so a verdict judged for one brand could be
 served for another; v4 also cached a fetch failure as `is_real: false`, which
@@ -272,7 +272,11 @@ fetch failure inside the consensus closure and returns an explicit, cacheable
 - **Actual fee consumed:** **~0.000085 GEN** mean across 21 fresh-consensus
   transactions on the live contract (`fees.consumed` — `executionConsumed` +
   `storageFeeUsed` + `messageFeesConsumed`), range 0.000078–0.000162 GEN. That
-  is roughly **12,000 validations per GEN**.
+  is roughly **12,000 validations per GEN**. The mean and range are a live read
+  rather than a stored file: `scripts/measure_cost.py` re-derives them by
+  querying the 21 transaction hashes in this document. The one sandboxed fee
+  record, `benchmark_fees.json`, holds a single transaction — 0.0000832 GEN
+  consumed — and sits inside the range above.
   0.000628 GEN is the budget *held* at submit; the unused remainder is refunded
   at finalization, so the deposit overstates the cost by ~7x.
   *Two corrections are recorded here. An early note said ~0.083 GEN — a 1000x
@@ -296,9 +300,10 @@ fetch failure inside the consensus closure and returns an explicit, cacheable
   leader included) and reports `complete: false` until the votes arrive, so the
   table is whole throughout and only the vote column fills in late.
 - **Latency:** highly variable on studio-dev. Execution is fast (leader ~1.5s,
-  validator ~0.9s of actual work); end-to-end finalization has been observed
-  anywhere from ~5s to ~135s depending on validator scheduling. Cache hits skip
-  the LLM round, but still cost a transaction and still wait on consensus.
+  validator ~0.9s of actual work); end-to-end finalization in the v5 run ranged
+  from **40.8s to 351.3s** (median 56.8s) depending on validator scheduling.
+  Cache hits skip the LLM round, but still cost a transaction and still wait on
+  consensus — the 3 cached cases took 41–53s, barely under the median.
 
 ## Reproduce
 
@@ -399,7 +404,7 @@ answered a different question than the one the benchmark was scoring.
 That pinned the root cause: the prompt had no concept of a *claimed brand*
 distinct from the page content.
 
-# v3 — the claimed-brand prompt + fresh 21-case benchmark
+# v3 — the claimed-brand prompt + a fresh 22-scenario benchmark
 
 **Contract:** `0xe366d9D7A94A7533a693eA0861b887232f1219A8` · prompt
 `v3-claimed-brand` · 9 Sept 2026 · raw data `benchmarks/benchmark_v3_results.json`
@@ -422,10 +427,12 @@ official domain.
 ## Dataset — live phishing pages, not synthetic wrong-brand sites
 
 Fake candidates came from the **OpenPhish community feed**
-(openphish.com/feed.txt) filtered to fetchable pages, so every fake case is
-a real, currently-live phishing/clone page:
+(openphish.com/feed.txt), filtered against a live fetch check
+(`scripts/check_dataset.py`) so the cases are real phishing/clone pages rather
+than synthetic wrong-brand sites. One of the nine (`ledgre`) already 403'd that
+check and produced no verdict — the filter is a snapshot, not a guarantee:
 
-- **8 phishing** — amazon & netflix storefront clones on github.io, an
+- **9 phishing** — amazon, netflix & spotify storefront clones on github.io, an
   exodus-wallet phish on vercel, a "fedx" typosquat on netlify, a "ledgre"
   typosquat on pages.dev. Three target *unregistered* brands (exodus, fedex,
   ledger) — exercising the general-knowledge fallback.
@@ -435,11 +442,14 @@ a real, currently-live phishing/clone page:
   store.google.com, open.spotify.com) plus newly-registered walmart.com and
   target.com.
 
+22 scenarios in all. One (`ledgre`) returned no verdict, and two others needed a
+retry, so the tables below score **21 verdicts** drawn from 25 transactions.
+
 ## Results: 21/21 — 100%
 
 | Category | Correct | Verdicts |
 |---|---|---|
-| Phishing (live lookalikes) | 8/8 blocked | 100% |
+| Phishing (live lookalikes) | 8/8 verdicts blocked | 100% |
 | Wrong seller (v1's failure class) | 3/3 blocked | 100% |
 | Real (incl. subdomains, unregistered-brand fallback) | 10/10 allowed | 100% |
 | **Total** | **21/21** | **100%** |
@@ -448,7 +458,7 @@ a real, currently-live phishing/clone page:
 > by detection and a block earned by a page failing to load are the same value in
 > `benchmark_v3_results.json`, so 100% here is an upper bound on detection, not a
 > measurement of it. When v5 measured the two separately, 14 of its 23 blocks
-> were detections and 7 were unreachable pages. Three of the eight phishing cases
+> were detections and 7 were unreachable pages. Three of the nine phishing cases
 > below — the `*.github.io` Amazon clones — now return 404 from GitHub Pages, so
 > today they would pass by failing closed rather than by being caught.
 
@@ -462,7 +472,7 @@ No-verdict cases (safe: block by default, no cache entry):
 
 **Every verdict in all three categories was correct, including all three
 v1/v2 false positives.** Median latency ~67s per validation
-(51–95s; the apple.com/iphone/ substitute took 372s through a slow fetch).
+(51–88s; the apple.com/iphone/ substitute took 372s through a slow fetch).
 
 Explorer: `https://explorer-studio-dev.genlayer.com/address/0xe366d9D7A94A7533a693eA0861b887232f1219A8`
 — per-tx hashes in `benchmarks/benchmark_v3_results.json` (the explorer's contract
@@ -472,7 +482,7 @@ page may not list every tx; open by hash).
 
 ```bash
 set GENCHECK_PRIVATE_KEY=0x...
-.venv-deploy/Scripts/python scripts/benchmark_v3.py     # 21-case run
+.venv-deploy/Scripts/python scripts/benchmark_v3.py     # 22-scenario run
 .venv-deploy/Scripts/python scripts/run_one_v3.py <url> <brand> <category> <0|1> <note>
 ```
 

@@ -88,8 +88,8 @@ gencheck check "$CHECKOUT_URL" "$BRAND" && pay || refuse
 | exit | meaning |
 |---|---|
 | `0` | **PAY** — consensus returned `is_real: true` |
-| `1` | **BLOCK** — consensus returned a verdict, and it was not `is_real: true` |
-| `2` | **ERROR** — no verdict obtained (no key, network failure, unverifiable) |
+| `1` | **BLOCK** — consensus returned a verdict, and it was not `is_real: true`. This includes `unverifiable`: a fetch failure is a verdict, not an error |
+| `2` | **ERROR** — no verdict was obtained at all (no key, node/network failure, or the transaction itself errored) |
 
 Both non-zero codes mean do not pay, so `&&` is safe without distinguishing them.
 

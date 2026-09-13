@@ -1,48 +1,33 @@
-> **Stale — recorded before the v5 deploy, and before the demo URL swap.** This
-> is the captured output of a real run, so it is left intact rather than edited;
-> editing a transcript by hand would make it a fabricated record. Two things in
-> it no longer hold:
->
-> - it names the **v4** contract `0x61153C8d…`, not the live v5 contract
-> - its offer 1, `vardhan2k3.github.io`, now returns **404** from GitHub Pages,
->   so that block came from the contract failing closed, not from detection —
->   the demo appeared to work while demonstrating nothing. `shopping_agent.py`
->   now points at a live clone instead.
->
-> Regenerate with a funded key:
-> `.venv-deploy/Scripts/python demo/shopping_agent.py`
-
 ```text
 ========================================================================
 GENCHECK SHOPPING AGENT — end-to-end demo (studio-dev, live consensus)
 ========================================================================
-GenCheck contract: 0x61153C8d907eBa4Ea96d5955c7b05F67F2967e2D
+GenCheck contract: 0xD914Bf44b78df2CC3FeFf343769800E11690288B
 
 Customer request: "Buy me the cheapest Amazon Echo Dot you can find"
 
 Product search returned 2 offers (cheapest first):
-  1. vardhan2k3.github.io         $19.99  found via product search — 60% below market
+  1. sarthforge.github.io         $19.99  found via product search — 60% below market
   2. www.amazon.com               $49.99  official Amazon cart
 
-[offer 1] vardhan2k3.github.io — $19.99 (brand: amazon)
+[offer 1] sarthforge.github.io — $19.99 (brand: amazon)
       asking GenCheck validators to fetch the page and judge...
-      validator consensus took 56s
-      verdict:   wrong_seller
+      validator consensus took 13s
+      verdict:   scam
       is_real:   False
       confidence:99
-      reason:    The checkout URL's domain is vardhan2k3.github.io, which is not amazon.com nor a subdomain of amazon
-      reason:    GitHub Pages (github.io) is a separate hosting service unrelated to Amazon.
-      >>> DECISION: BLOCK — vardhan2k3.github.io (wrong_seller)
+      reason:    The checkout URL domain is 'sarthforge.github.io', which is a GitHub Pages hosting domain and has …
+      reason:    The page is an 'amazon-clone' explicitly named as such in the URL path ('/amazon-clone/cart.html'), …
+      reason:    The page copies Amazon's branding, layout, and design elements (logo, navigation, footer text …
+      >>> DECISION: BLOCK — sarthforge.github.io (scam)
 
 [offer 2] www.amazon.com — $49.99 (brand: amazon)
       asking GenCheck validators to fetch the page and judge...
-      validator consensus took 78s
+      cache hit: domain already validated for this brand (instant, free)
       verdict:   real
       is_real:   True
       confidence:99
-      reason:    The checkout URL domain is 'amazon.com', which is the official domain for Amazon.
-      reason:    The page content matches exactly with the official Amazon page content, including navigation, depart
-      reason:    The URL path '/gp/cart/view.html' is a well-known and legitimate Amazon cart URL structure.
+      reason:    cached consensus verdict for brand 'amazon' (confidence 99); the specific verdict and its reasoning …
       >>> DECISION: PAY — $49.99 to www.amazon.com (real)
 
 ========================================================================

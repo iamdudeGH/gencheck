@@ -52,6 +52,19 @@ def log(msg=""):
     print(msg, flush=True)
 
 
+def clip(text, limit=100):
+    """Trim a reason to a word boundary.
+
+    The transcript is a rendered artifact, so cutting mid-word ("...or a s")
+    reads as broken output rather than as an abbreviation.
+    """
+    text = " ".join(str(text).split())
+    if len(text) <= limit:
+        return text
+    cut = text[:limit].rsplit(" ", 1)[0]
+    return (cut or text[:limit]) + " …"
+
+
 def main():
     gencheck = GenCheck(private_key=os.environ["GENCHECK_PRIVATE_KEY"])
     contract = gencheck.contract
@@ -80,13 +93,36 @@ def main():
         say("      asking GenCheck validators to fetch the page and judge...")
 
         cached = gencheck.check_cache(offer["store"])
-        if cached is not None:
-            verdict = {"is_real": cached["is_real"],
-                       "verdict": "real" if cached["is_real"] else "scam",
-                       "confidence": 100,
-                       "reasons": ["cached from previous consensus run (instant, free)"]}
-            say("      cache hit: domain already validated by earlier consensus")
+        # The cache entry carries only is_real / confidence / brand. Two things
+        # it must not be read as:
+        #
+        #   - a verdict word. `is_real: False` covers scam, wrong_seller,
+        #     unsure AND unverifiable alike. Deriving "scam" from it fabricates
+        #     a detection: a domain that merely failed to fetch would be
+        #     reported as caught, which is precisely the conflation the v5
+        #     benchmark exists to separate. The contract's own cache vocabulary
+        #     is "blocked", so use that and say the rest is unknown.
+        #   - a hit for any brand. v5 keys the cache on (domain, brand) for
+        #     this reason; without the check a domain cached as real for its
+        #     own brand would answer for a different one, and the agent would
+        #     pay on a wrong-seller claim.
+        if cached is not None and cached.get("brand") == offer["brand"]:
+            confidence = cached.get("confidence") or 0
+            verdict = {
+                "is_real": cached["is_real"],
+                "verdict": "real" if cached["is_real"] else "blocked",
+                "confidence": confidence,
+                "reasons": [
+                    f"cached consensus verdict for brand '{offer['brand']}' "
+                    f"(confidence {confidence}); the specific verdict and its "
+                    f"reasoning are not stored in the cache",
+                ],
+            }
+            say("      cache hit: domain already validated for this brand (instant, free)")
         else:
+            if cached is not None:
+                say(f"      cache holds a verdict for brand '{cached.get('brand')}', "
+                    f"not '{offer['brand']}' — re-judging")
             t0 = time.time()
             verdict = gencheck.validate(offer["checkout_url"], offer["brand"])
             say(f"      validator consensus took {time.time() - t0:.0f}s")
@@ -99,7 +135,7 @@ def main():
                 conf = int(round(conf * 100))
             say(f"      confidence:{conf}")
             for r in verdict.get("reasons", [])[:3]:
-                say(f"      reason:    {r[:100]}")
+                say(f"      reason:    {clip(r)}")
         else:
             say("      verdict:   NONE — validators could not produce one")
 

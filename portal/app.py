@@ -99,9 +99,30 @@ KNOWN_VERDICTS = {
     # Its guard compares only `is_real`, and the domain now 404s — so it returns
     # `unverifiable` with is_real False, which matched this entry's is_real
     # False and attached wrong_seller reasoning to what was really a fail-closed
-    # fetch failure. Do not add an entry for the new demo domain until a real
-    # consensus run has produced its reasons: these are decoded on-chain output,
-    # and writing them by hand would put fabricated evidence on the page.
+    # fetch failure.
+    #
+    # The replacement below is sound in a way that entry was not: the domain is
+    # live and the reasons are the decoded on-chain output of a real consensus
+    # run (verdict `scam`, confidence 99), not hand-written. The judgement was
+    # made against a fetching page, so unlike the 404 case the guard cannot
+    # attach these reasons to a fetch failure.
+    #
+    # No tx_id: `GenCheck.validate()` returns the verdict but not the hash of the
+    # transaction that produced it, so the run that filled this cache is not
+    # citable. Deliberately left out rather than filled with the later cache-read
+    # hash — that tx does not contain these reasons, and linking it here would
+    # misattribute the evidence. `_verdict_response` omits the sentence when
+    # this key is absent.
+    "sarthforge.github.io": {
+        "is_real": False, "verdict": "scam", "confidence": 99,
+        "reasons": [
+            "The checkout URL is hosted on 'sarthforge.github.io', which is a GitHub Pages domain owned by a third party, not Amazon's official domain (amazon.com).",
+            "The page is an 'Amazon Clone' explicitly named as such ('Your Amazon Clone Cart is empty'), confirming it is an imitation site, not the real Amazon.",
+            "GitHub.io is a free hosting platform commonly used to host lookalike/clone sites, which is a strong scam signal.",
+            "The page copies Amazon's branding, layout, and design elements to impersonate Amazon while being hosted on an entirely unrelated domain.",
+            "No legitimate Amazon checkout would ever be hosted on github.io or any subdomain outside of amazon.com and its official regional domains.",
+        ],
+    },
     "www.amazon.com": {
         "is_real": True, "verdict": "real", "confidence": 99,
         "reasons": [

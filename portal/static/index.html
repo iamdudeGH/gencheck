@@ -6,7 +6,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <meta name="theme-color" content="#0e0e0f">
-<title>GenCheck — check the shop before your AI agent pays</title>
+<title>GenCheck: check the shop before your AI agent pays</title>
 <meta name="description" content="Before an AI agent pays, GenLayer's validators look at the shop themselves and record their answer publicly: is this really the brand's store, or a fake? If they can't be sure, the agent doesn't pay.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -484,9 +484,10 @@
     <h1>Your AI agent is about to pay.<br><em>GenCheck checks the shop first.</em></h1>
     <p class="lede">
       The cheapest offer an agent finds is often a fake store. Before it pays, GenCheck asks
-      <b>GenLayer's validators</b> — independent computers that each look at the page
-      themselves — whether the shop really belongs to the brand. Their answer is recorded
-      publicly, so anyone can check it. The agent pays only if the answer is <b>real</b>.
+      <b>GenLayer's validators</b> one question: does this shop really belong to the brand?
+      Each validator is an independent computer that looks at the page itself. Their answer
+      is recorded publicly, so anyone can check it. The agent pays only if the answer is
+      <b>real</b>.
     </p>
 
     <div class="checker">
@@ -509,7 +510,7 @@
       </label>
       <button class="btn" id="go" type="button">Verify</button>
     </div>
-    <div class="hint">Every check runs for real on GenLayer — you get a public receipt in
+    <div class="hint">Every check runs for real on GenLayer. You get a public receipt in
       about 2 seconds, and the answer once the validators agree.
       <a href="#examples">Or try an example.</a></div>
     <div class="errline" id="err"></div>
@@ -536,7 +537,7 @@
       <div class="cons-stats" id="cons-stats"></div>
     </div>
     <div id="cons-body">
-      <div class="panel empty">Run a check above — you'll see what the validators decided,
+      <div class="panel empty">Run a check above. You'll see what the validators decided,
         how each of them voted, and what the check actually cost.</div>
     </div>
   </div>
@@ -549,7 +550,7 @@
         <span class="lbl">The intercept</span>
         <h2 style="margin-top:6px">GenCheck stops your agent paying a scam site</h2>
       </div>
-      <p>Your agent is about to pay. GenCheck checks the shop first — if it isn't the
+      <p>Your agent is about to pay. GenCheck checks the shop first. If it isn't the
         real store, the money never leaves the wallet.</p>
     </div>
 
@@ -613,8 +614,8 @@
         <span class="lbl">Real checks, already run</span>
         <h2 style="margin-top:6px">What the validators decided</h2>
       </div>
-      <p>Each card runs a <b>brand-new</b> check against the live contract — you get your own
-        receipt to look up.</p>
+      <p>Each card runs a <b>brand-new</b> check against the live contract, and you get your
+        own receipt to look up.</p>
     </div>
     <div class="cards" id="exgrid"></div>
   </div>
@@ -652,9 +653,9 @@
         <div>
           <div class="n">03</div>
           <h3>They each decide, then vote</h3>
-          <p>Every validator's AI — a different model, run by a different operator — judges
-            whether the domain and the page really belong to the brand, then votes. They
-            have to agree on the answer.</p>
+          <p>Every validator's AI judges whether the domain and the page really belong to
+            the brand, then votes. Each one is a different model run by a different
+            operator. They have to agree on the answer.</p>
         </div>
         <div class="code">gl.eq_principle.prompt_comparative</div>
       </div>
@@ -663,7 +664,7 @@
           <div class="n">04</div>
           <h3>The answer is recorded</h3>
           <p>The agreed answer is written to the contract and remembered for that domain. If
-            a page can't be loaded, the answer is "we couldn't check" — which is never
+            a page can't be loaded, the answer is "we couldn't check", and that is never
             treated as safe.</p>
         </div>
         <div class="code">TreeMap cache · fail-closed</div>
@@ -679,17 +680,17 @@
         <span class="lbl">Benchmarks</span>
         <h2 style="margin-top:6px">Measured, not projected</h2>
       </div>
-      <p>Real websites, checked by real validators. How we measured — and how we improved
-        the checks from v1 to v5 — is in the repo.</p>
+      <p>Real websites, checked by real validators. The repo has the full method, and how
+        the checks improved from v1 to v5.</p>
     </div>
     <div class="stats">
       <div class="stat"><b>93.9%</b><div class="k">websites tested</div>
-        <p>46 of 49 answers were right on the live contract — real phishing pages, sites
-          pretending to be another brand, and genuine checkouts.</p></div>
+        <p>46 of 49 answers were right on the live contract. The set covered real phishing
+          pages, sites pretending to be another brand, and genuine checkouts.</p></div>
       <div class="stat"><b>0</b><div class="k">scams let through</div>
         <p>Not one of the 23 fake stores was cleared for payment.</p></div>
       <div class="stat"><b>14/23</b><div class="k">scams actually caught</div>
-        <p>The other 9 we stopped without ever catching them — the page wouldn't load, or
+        <p>The other 9 we stopped without ever catching them. The page wouldn't load, or
           the validators weren't sure. This run counts those separately, so a dead page
           isn't scored as a catch.</p></div>
       <div class="stat"><b>3</b><div class="k">real shops wrongly blocked</div>
@@ -742,7 +743,7 @@ action, why = decide(verdict)  <span class="c"># fail-closed</span>
 
 <footer>
   <div class="wrap">
-    <span>GenCheck — built on
+    <span>GenCheck, built on
       <a href="https://genlayer.com" target="_blank" rel="noopener">GenLayer</a>
       for the Agent Tank hackathon</span>
     <span class="mono">
@@ -886,7 +887,7 @@ async function runCheck() {
     }
     activeTx = data.tx_id;
 
-    livebar(true, "sent — the validators are picking it up", data.tx_id, "0 s");
+    livebar(true, "sent, and the validators are picking it up", data.tx_id, "0 s");
     setConsHead(data.tx_id, [{k: "status", v: "waiting for the validators"}]);
     const started = Date.now();
     while (Date.now() - started < 300000) {
@@ -910,7 +911,7 @@ async function runCheck() {
       ]);
     }
     $("err").textContent = "This is taking longer than usual. Your check is still " +
-      "running — follow the receipt link above.";
+      "running. Follow the receipt link above.";
   } catch (e) {
     $("err").textContent = "Something went wrong: " + e;
   } finally {
@@ -985,16 +986,16 @@ function showResult(s, url, brand) {
 
   if (decision === "PAY") {
     cls = "ok"; title = "Verified seller";
-    policy = `Pay — the validators agree this is the real “${brand}” store.`;
+    policy = `Pay. The validators agree this is the real “${brand}” store.`;
   } else if (!verdict || verdict === "unverifiable" ||
              status === "no_verdict" || status === "error") {
     cls = "warn"; title = "Couldn't verify";
-    policy = "Don't pay — the validators couldn't check this page, and we don't pay when we can't be sure.";
+    policy = "Don't pay. The validators couldn't check this page, and we don't pay when we can't be sure.";
   } else {
     cls = "bad"; title = "Not this brand's store";
     policy = verdict === "wrong_seller"
-      ? `Don't pay — this domain doesn't belong to “${brand}”.`
-      : `Don't pay — the validators agree this is a fake “${brand}” store.`;
+      ? `Don't pay. This domain doesn't belong to “${brand}”.`
+      : `Don't pay. The validators agree this is a fake “${brand}” store.`;
   }
 
   setConsHead(s.tx.id, [
@@ -1028,7 +1029,7 @@ function showResult(s, url, brand) {
   const cacheFoot = d.is_cached
     ? `<li class="cachefoot"><span class="mk">·</span>` +
       `We had already checked this domain on an earlier run, so the validators returned ` +
-      `that answer instead of deciding again — this check still ran and has its own ` +
+      `that answer instead of deciding again. This check still ran and has its own ` +
       `receipt` +
       (d.original_tx_id
         ? `; the earlier check that decided it is ` +
@@ -1104,7 +1105,7 @@ function votesTable(consensus) {
     const idle = v.vote !== "agree";
     const model = v.model
       ? esc(v.model) + (v.provider ? ` <span class="prov">${esc(v.provider)}</span>` : "")
-      : `<span class="nonesuch">— didn't vote</span>`;
+      : `<span class="nonesuch">didn't vote</span>`;
     return `<tr class="${idle ? "idle" : ""}">
       <td class="addr">${esc(short(v.address))}${v.role === "leader"
         ? '<span class="leaderchip">LEADER</span>' : ""}</td>

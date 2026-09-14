@@ -82,7 +82,7 @@ EXAMPLES = [
     {"label": "Target cart",
      "url": "https://www.target.com/cart", "brand": "target",
      "expected": "cleared"},
-    {"label": "Sephora (blocks our validators — can't be checked)",
+    {"label": "Sephora (blocks our validators, so we can't check it)",
      "url": "https://sephora.com/checkout", "brand": "sephora",
      "expected": "unverifiable"},
 ]
@@ -489,7 +489,7 @@ def _no_key_response(url, brand, domain):
         "url": url, "brand": brand, "domain": domain,
         "status": "no_key", "is_cached": False,
         "is_real": False, "decision": "BLOCK",
-        "reason": ("this demo can't reach GenLayer right now — its wallet isn't "
+        "reason": ("this demo can't reach GenLayer right now. Its wallet isn't "
                    "set up, so it can't send a real check, and it won't pretend "
                    "to have run one"),
     }
@@ -500,7 +500,7 @@ def _rate_limited_response(url, brand, domain):
         "url": url, "brand": brand, "domain": domain,
         "status": "rate_limited", "is_cached": False,
         "is_real": False, "decision": "BLOCK",
-        "reason": ("You've hit the limit for this visitor — each check is a real "
+        "reason": ("You've hit the limit for this visitor. Each check is a real "
                    "one, so the portal caps how many a single person can send per "
                    "hour. Try again later."),
     }

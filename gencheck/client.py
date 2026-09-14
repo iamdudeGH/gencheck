@@ -231,7 +231,7 @@ def decide(verdict: Optional[dict]) -> tuple:
     Returns ("PAY" | "BLOCK", reason).
     """
     if verdict is None:
-        return "BLOCK", "no verdict came back, so we can't confirm this page — blocked by default"
+        return "BLOCK", "no verdict came back, so we can't confirm this page, and we block by default"
     if verdict.get("is_real") is True:
         return "PAY", verdict.get("verdict", "real")
     return "BLOCK", verdict.get("verdict", "unknown")

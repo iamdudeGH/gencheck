@@ -956,17 +956,27 @@ function patchCost(chain) {
 function showResult(s, url, brand) {
   const d = s.verdict || {};
   const chain = s.chain || {};
+  // The contract's vocabulary is lowercase, but nothing downstream enforces
+  // that: these three fields arrive as chain data, and a stray "Unverifiable"
+  // used to miss the branch below and fall through to the scam case — a fetch
+  // failure rendered as "Not this brand's store", i.e. a detection it never
+  // made. Both branches BLOCK, so the gate stayed closed, but the page
+  // described the wrong thing. Match the vocabulary case-insensitively rather
+  // than trusting the casing to hold.
+  const verdict = String(d.verdict || "").toLowerCase();
+  const status = String(d.status || "").toLowerCase();
+  const decision = String(d.decision || "").toUpperCase();
   let cls, title, policy;
 
-  if (d.decision === "PAY") {
+  if (decision === "PAY") {
     cls = "ok"; title = "Verified seller";
     policy = `POLICY TRIGGERED: [PROCEED] → consensus confirms the genuine seller for “${brand}”`;
-  } else if (d.verdict === "unverifiable" || d.status === "no_verdict" || d.status === "error") {
+  } else if (verdict === "unverifiable" || status === "no_verdict" || status === "error") {
     cls = "warn"; title = "Unverifiable";
     policy = "POLICY TRIGGERED: [STOP_PAYMENT] → validators could not verify this page — fail closed";
   } else {
     cls = "bad"; title = "Not this brand's store";
-    policy = d.verdict === "wrong_seller"
+    policy = verdict === "wrong_seller"
       ? `POLICY TRIGGERED: [STOP_PAYMENT] → domain does not belong to “${brand}”`
       : `POLICY TRIGGERED: [STOP_PAYMENT] → consensus flagged a lookalike for “${brand}”`;
   }
@@ -1017,7 +1027,7 @@ function showResult(s, url, brand) {
   // it is tagged with, which rendered as two identical chips. Show the tag only
   // when it says something the status chip doesn't.
   const statusChip = cls === "ok" ? "verified" : cls === "warn" ? "unverifiable" : "flagged";
-  const tag = String(d.verdict || "blocked");
+  const tag = verdict || "blocked";
   const tagChip = tag.toLowerCase() === statusChip
     ? ""
     : `<span class="chip plain">tag: ${esc(tag)}</span>`;

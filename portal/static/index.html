@@ -6,8 +6,8 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <meta name="theme-color" content="#0e0e0f">
-<title>GenCheck — the trust layer for AI checkout</title>
-<meta name="description" content="Before an AI agent pays, GenLayer validators fetch the checkout URL and the brand's real storefront and record a verdict on-chain: genuine seller, or lookalike. Fail-closed.">
+<title>GenCheck — check the shop before your AI agent pays</title>
+<meta name="description" content="Before an AI agent pays, GenLayer's validators look at the shop themselves and record their answer publicly: is this really the brand's store, or a fake? If they can't be sure, the agent doesn't pay.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -374,7 +374,10 @@
           display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
   .card:hover { border-color: var(--line2); background: var(--panel2); }
   .card:disabled { opacity: .5; cursor: wait; }
-  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  /* The card grid bottoms out at 285px, and the chip labels are prose. Without
+     this a long label wraps inside its own pill instead of moving the dot down. */
+  .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+              flex-wrap: wrap; }
   .card .dotv { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
   .card.ok .dotv { background: var(--accent); } .card.bad .dotv { background: var(--bad); }
   .card.warn .dotv { background: var(--warn); }
@@ -382,6 +385,7 @@
                word-break: break-all; }
   .card .desc { font-size: 12px; color: var(--dim); margin-top: 5px; }
   .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+               flex-wrap: wrap;
                padding-top: 11px; border-top: 1px solid var(--line); font-family: var(--mono);
                font-size: 10.5px; letter-spacing: .04em; text-transform: uppercase; }
   .card-foot .k { color: var(--dim); }
@@ -477,13 +481,12 @@
 <section class="hero">
   <div class="wrap">
     <div class="kicker"><span class="dot"></span><span>live on GenLayer</span></div>
-    <h1>Your AI agent is about to pay.<br><em>GenCheck makes sure it should not.</em></h1>
+    <h1>Your AI agent is about to pay.<br><em>GenCheck checks the shop first.</em></h1>
     <p class="lede">
-      The cheapest offer an agent finds is often a lookalike storefront. Before it signs a
-      payment, GenCheck sends the checkout URL to <b>GenLayer validator consensus</b>:
-      independent validators fetch the page and the brand's real site, judge whether the
-      domain actually belongs to that brand, and write the verdict on-chain — where anyone
-      can check it. An agent pays only on a verified <b>real</b>.
+      The cheapest offer an agent finds is often a fake store. Before it pays, GenCheck asks
+      <b>GenLayer's validators</b> — independent computers that each look at the page
+      themselves — whether the shop really belongs to the brand. Their answer is recorded
+      publicly, so anyone can check it. The agent pays only if the answer is <b>real</b>.
     </p>
 
     <div class="checker">
@@ -501,18 +504,18 @@
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 9l1.5-5h15L21 9"/><path d="M3 9h18v11H3z"/><path d="M9 20v-6h6v6"/>
         </svg>
-        <input id="brand" type="text" spellcheck="false" aria-label="claimed brand"
-               placeholder="claimed brand · amazon">
+        <input id="brand" type="text" spellcheck="false" aria-label="brand the agent expects"
+               placeholder="brand · amazon">
       </label>
       <button class="btn" id="go" type="button">Verify</button>
     </div>
-    <div class="hint">Every check submits a real on-chain transaction — the hash appears in
-      ~2 s, the verdict when validators finalize.
-      <a href="#examples">Or run a verified example.</a></div>
+    <div class="hint">Every check runs for real on GenLayer — you get a public receipt in
+      about 2 seconds, and the answer once the validators agree.
+      <a href="#examples">Or try an example.</a></div>
     <div class="errline" id="err"></div>
     <div class="livebar" id="livebar">
       <span class="dotpulse"></span>
-      <span id="live-state">submitting…</span>
+      <span id="live-state">sending…</span>
       <a id="live-tx" href="#" target="_blank" rel="noopener" style="display:none"></a>
       <span id="live-elapsed" style="margin-left:auto;color:var(--dim)"></span>
     </div>
@@ -533,8 +536,8 @@
       <div class="cons-stats" id="cons-stats"></div>
     </div>
     <div id="cons-body">
-      <div class="panel empty">Run a check above — the on-chain verdict, the validator jury,
-        and the transaction's real cost appear here.</div>
+      <div class="panel empty">Run a check above — you'll see what the validators decided,
+        how each of them voted, and what the check actually cost.</div>
     </div>
   </div>
 </section>
@@ -607,11 +610,11 @@
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <span class="lbl">Audited transactions</span>
-        <h2 style="margin-top:6px">Decisions the validator network has reached</h2>
+        <span class="lbl">Real checks, already run</span>
+        <h2 style="margin-top:6px">What the validators decided</h2>
       </div>
-      <p>Each card runs a <b>new</b> transaction against the live contract — the hash is yours
-        to verify on the explorer.</p>
+      <p>Each card runs a <b>brand-new</b> check against the live contract — you get your own
+        receipt to look up.</p>
     </div>
     <div class="cards" id="exgrid"></div>
   </div>
@@ -621,7 +624,7 @@
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <span class="lbl">Architectural flow</span>
+        <span class="lbl">How it works</span>
         <h2 style="margin-top:6px">What happens between a URL and a verdict</h2>
       </div>
     </div>
@@ -629,38 +632,39 @@
       <div class="step">
         <div>
           <div class="n">01</div>
-          <h3>Transaction</h3>
-          <p>The agent calls <code>validate_checkout</code> before signing the payment. The
-            hash is public immediately, so the decision is auditable whether or not the
-            agent proceeds.</p>
+          <h3>The agent asks</h3>
+          <p>Before it pays, the agent calls <code>validate_checkout</code>. The receipt is
+            public straight away, so the decision can be checked afterwards whether or not
+            the agent goes ahead.</p>
         </div>
         <div class="code">gl.public.write</div>
       </div>
       <div class="step">
         <div>
           <div class="n">02</div>
-          <h3>Investigation</h3>
-          <p>Each validator independently fetches the checkout page and the brand's official
-            site inside the GenVM sandbox, and compares what it finds.</p>
+          <h3>Validators look</h3>
+          <p>Each validator fetches the checkout page and the brand's real site itself, then
+            compares the two. They don't share notes first.</p>
         </div>
         <div class="code">gl.nondet.web.render</div>
       </div>
       <div class="step">
         <div>
           <div class="n">03</div>
-          <h3>Judgment &amp; vote</h3>
-          <p>Every validator's LLM — different models from different operators — judges
-            domain ownership and page content, then votes. Validators must agree on the
-            verdict itself.</p>
+          <h3>They each decide, then vote</h3>
+          <p>Every validator's AI — a different model, run by a different operator — judges
+            whether the domain and the page really belong to the brand, then votes. They
+            have to agree on the answer.</p>
         </div>
         <div class="code">gl.eq_principle.prompt_comparative</div>
       </div>
       <div class="step">
         <div>
           <div class="n">04</div>
-          <h3>On-chain verdict</h3>
-          <p>The agreed verdict is written to contract storage and cached per domain. A
-            fetch that fails fails closed — unverifiable is never treated as safe.</p>
+          <h3>The answer is recorded</h3>
+          <p>The agreed answer is written to the contract and remembered for that domain. If
+            a page can't be loaded, the answer is "we couldn't check" — which is never
+            treated as safe.</p>
         </div>
         <div class="code">TreeMap cache · fail-closed</div>
       </div>
@@ -675,21 +679,22 @@
         <span class="lbl">Benchmarks</span>
         <h2 style="margin-top:6px">Measured, not projected</h2>
       </div>
-      <p>Live URLs through real validator consensus on studio-dev. Methodology and the
-        v1 → v5 prompt-fix arc are in the repo.</p>
+      <p>Real websites, checked by real validators. How we measured — and how we improved
+        the checks from v1 to v5 — is in the repo.</p>
     </div>
     <div class="stats">
-      <div class="stat"><b>93.9%</b><div class="k">50 labeled URLs</div>
-        <p>46 of 49 verdicts correct on the live contract — live OpenPhish phishing
-          pages, wrong-seller sites, and legitimate checkouts.</p></div>
-      <div class="stat"><b>0</b><div class="k">false positives</div>
-        <p>Not one of 23 lookalikes was cleared for payment.</p></div>
-      <div class="stat"><b>14/23</b><div class="k">blocks by detection</div>
-        <p>The other 9 failed closed or came back <code>unsure</code>. This run
-          separates the two, so a dead page is not counted as a catch.</p></div>
-      <div class="stat"><b>3</b><div class="k">false negatives</div>
-        <p>Real checkouts blocked: two bot-block the validators, one was a genuine
-          misjudgement. Disclosed rather than hidden.</p></div>
+      <div class="stat"><b>93.9%</b><div class="k">websites tested</div>
+        <p>46 of 49 answers were right on the live contract — real phishing pages, sites
+          pretending to be another brand, and genuine checkouts.</p></div>
+      <div class="stat"><b>0</b><div class="k">scams let through</div>
+        <p>Not one of the 23 fake stores was cleared for payment.</p></div>
+      <div class="stat"><b>14/23</b><div class="k">scams actually caught</div>
+        <p>The other 9 we stopped without ever catching them — the page wouldn't load, or
+          the validators weren't sure. This run counts those separately, so a dead page
+          isn't scored as a catch.</p></div>
+      <div class="stat"><b>3</b><div class="k">real shops wrongly blocked</div>
+        <p>Two of them block our validators from loading the page; one was a genuine
+          mistake on our side. We publish this rather than hide it.</p></div>
     </div>
   </div>
 </section>
@@ -698,22 +703,22 @@
   <div class="wrap">
     <div class="sec-head">
       <div>
-        <span class="lbl">Developer integration</span>
-        <h2 style="margin-top:6px">One rule: no consensus-backed real, no payment</h2>
+        <span class="lbl">For developers</span>
+        <h2 style="margin-top:6px">One rule: unless the validators say real, don't pay</h2>
       </div>
-      <p>The gate lives in the agent's own payment path and fails closed — anything other
-        than a verified <code>real</code> blocks.</p>
+      <p>The check sits in the agent's own payment code. Anything other than a clear
+        <code>real</code> from the validators stops the payment.</p>
     </div>
     <div class="intgrid">
       <div class="codecard">
-        <div class="bar"><span class="t">MCP server</span><span class="f">zero integration code</span></div>
+        <div class="bar"><span class="t">MCP server</span><span class="f">no code to write</span></div>
 <pre><span class="c"># reads are free; writes need a funded key</span>
 claude mcp add gencheck \
   --env <span class="a">GENCHECK_PRIVATE_KEY=0x…</span> \
   -- python -m gencheck.mcp_server</pre>
       </div>
       <div class="codecard">
-        <div class="bar"><span class="t">Python client</span><span class="f">the agent's payment gate</span></div>
+        <div class="bar"><span class="t">Python client</span><span class="f">the part that stops the payment</span></div>
 <pre><span class="k">from</span> gencheck <span class="k">import</span> GenCheck, decide
 
 gc = GenCheck(private_key=<span class="a">os.environ["GENCHECK_PRIVATE_KEY"]</span>)
@@ -724,9 +729,9 @@ action, why = decide(verdict)  <span class="c"># fail-closed</span>
     </div>
     <div class="skillstrip">
       <div>
-        <h3>Point your agent at the skill<span class="badge">for your agent</span></h3>
-        <div class="sub">One markdown file — what GenCheck is, when to call it, and the one
-          rule it must obey.</div>
+        <h3>Give your agent the skill file<span class="badge">for your agent</span></h3>
+        <div class="sub">One short file telling your agent what GenCheck is, when to use it,
+          and the one rule it must follow.</div>
       </div>
 <pre>curl -s <span class="a" id="skill-url">/skill.md</span></pre>
     </div>
@@ -801,9 +806,10 @@ async function boot() {
   data.examples.forEach(ex => {
     const cls = ex.expected === "cleared" ? "ok"
               : ex.expected === "unverifiable" ? "warn" : "bad";
-    const label = ex.expected === "cleared" ? "cleared" : ex.expected;
-    const action = ex.expected === "cleared" ? "PROCEED"
-                 : ex.expected === "unverifiable" ? "BLOCK · fail closed" : "BLOCK";
+    const label = ex.expected === "cleared" ? "real store"
+                : ex.expected === "unverifiable" ? "couldn't check" : "fake store";
+    const action = ex.expected === "cleared" ? "PAY"
+                 : ex.expected === "unverifiable" ? "DON'T PAY · unverified" : "DON'T PAY";
     const b = document.createElement("button");
     b.type = "button";
     b.className = "card " + cls;
@@ -841,10 +847,10 @@ function livebar(show, state, txId, elapsed) {
 }
 
 function setConsHead(txId, stats) {
-  // the hash is the proof — show it in full, and link it to the explorer
+  // the receipt id is the proof — show it in full, and link it to the explorer
   $("cons-tx").innerHTML = txId
-    ? `TX# <a href="${EXPLORER}/tx/${esc(txId)}" target="_blank" rel="noopener">${esc(txId)} ↗</a>`
-    : "no transaction yet";
+    ? `receipt <a href="${EXPLORER}/tx/${esc(txId)}" target="_blank" rel="noopener">${esc(txId)} ↗</a>`
+    : "no check run yet";
   // a stat may carry an id so it can be patched later without redrawing the row
   $("cons-stats").innerHTML = (stats || []).map(s =>
     `<span class="stat">${esc(s.k)} <b class="${s.g ? "g" : ""}"` +
@@ -860,7 +866,7 @@ async function runCheck() {
   running = true;
   $("go").disabled = true;
   document.querySelectorAll(".card").forEach(c => c.disabled = true);
-  livebar(true, "submitting transaction to GenLayer…", null, "");
+  livebar(true, "sending this to GenLayer…", null, "");
   setConsHead(null, []);
 
   try {
@@ -871,17 +877,17 @@ async function runCheck() {
     const data = await res.json();
     if (data.error) { $("err").textContent = data.error; livebar(false); return; }
 
-    // From here a real transaction exists on-chain. There is no cached
-    // shortcut — every check, including these example cards, is its own tx.
+    // From here a real check exists on GenLayer. There is no cached
+    // shortcut — every check, including these example cards, is its own run.
     if (!data.tx_id) {
       livebar(false);
-      $("err").textContent = data.reason || "could not submit a transaction";
+      $("err").textContent = data.reason || "couldn't send the check";
       return;
     }
     activeTx = data.tx_id;
 
-    livebar(true, "transaction submitted — validators picking it up", data.tx_id, "0 s");
-    setConsHead(data.tx_id, [{k: "stage", v: "awaiting validators"}]);
+    livebar(true, "sent — the validators are picking it up", data.tx_id, "0 s");
+    setConsHead(data.tx_id, [{k: "status", v: "waiting for the validators"}]);
     const started = Date.now();
     while (Date.now() - started < 300000) {
       await sleep(3000);
@@ -890,23 +896,23 @@ async function runCheck() {
       const s = await res.json();
       const el = Math.round((Date.now() - started) / 1000) + " s";
       if (s.stage === "final") {
-        livebar(true, `consensus final · ${esc(s.tx.state)}`, s.tx.id, el);
+        livebar(true, `agreed · ${esc(s.tx.state)}`, s.tx.id, el);
         showResult(s, url, brand);
         refreshFinal(s, url, brand);
         setTimeout(() => livebar(false), 4000);
         return;
       }
-      livebar(true, `watching validators · chain state ` +
+      livebar(true, `waiting for the validators · ` +
                     `<span class="state">${esc(s.tx.state)}</span>`, s.tx.id, el);
       setConsHead(data.tx_id, [
-        {k: "chain state", v: s.tx.state || "…"},
-        {k: "elapsed", v: el},
+        {k: "status", v: s.tx.state || "…"},
+        {k: "waiting", v: el},
       ]);
     }
-    $("err").textContent = "consensus is taking unusually long — the transaction is still " +
-      "on-chain; follow the explorer link above";
+    $("err").textContent = "This is taking longer than usual. Your check is still " +
+      "running — follow the receipt link above.";
   } catch (e) {
-    $("err").textContent = "request failed: " + e;
+    $("err").textContent = "Something went wrong: " + e;
   } finally {
     running = false;
     $("go").disabled = false;
@@ -979,22 +985,22 @@ function showResult(s, url, brand) {
 
   if (decision === "PAY") {
     cls = "ok"; title = "Verified seller";
-    policy = `POLICY TRIGGERED: [PROCEED] → consensus confirms the genuine seller for “${brand}”`;
+    policy = `Pay — the validators agree this is the real “${brand}” store.`;
   } else if (!verdict || verdict === "unverifiable" ||
              status === "no_verdict" || status === "error") {
-    cls = "warn"; title = "Unverifiable";
-    policy = "POLICY TRIGGERED: [STOP_PAYMENT] → validators could not verify this page — fail closed";
+    cls = "warn"; title = "Couldn't verify";
+    policy = "Don't pay — the validators couldn't check this page, and we don't pay when we can't be sure.";
   } else {
     cls = "bad"; title = "Not this brand's store";
     policy = verdict === "wrong_seller"
-      ? `POLICY TRIGGERED: [STOP_PAYMENT] → domain does not belong to “${brand}”`
-      : `POLICY TRIGGERED: [STOP_PAYMENT] → consensus flagged a lookalike for “${brand}”`;
+      ? `Don't pay — this domain doesn't belong to “${brand}”.`
+      : `Don't pay — the validators agree this is a fake “${brand}” store.`;
   }
 
   setConsHead(s.tx.id, [
     {k: "cost", v: costLabel(chain), g: true, id: "stat-cost"},
-    {k: "leader", v: fmtMs(s.consensus && s.consensus.leader && s.consensus.leader.processing_time)},
-    {k: "quorum", v: s.consensus
+    {k: "fastest validator", v: fmtMs(s.consensus && s.consensus.leader && s.consensus.leader.processing_time)},
+    {k: "agreement", v: s.consensus
         ? (s.consensus.complete === false ? "reading…"
            : `${s.consensus.quorum.agree}/${s.consensus.quorum.total}`)
         : "—"},
@@ -1013,7 +1019,7 @@ function showResult(s, url, brand) {
   const haveOriginal = !!(d.is_cached && d.original_reasons && d.original_reasons.length);
   const reasons = haveOriginal ? d.original_reasons
     : (d.reasons && d.reasons.length) ? d.reasons
-    : ["no reasoning returned by this transaction"];
+    : ["this check came back without an explanation"];
 
   const findings = reasons.map(t =>
     `<li class="${cls === "ok" ? "ok" : "bad"}">` +
@@ -1021,30 +1027,35 @@ function showResult(s, url, brand) {
 
   const cacheFoot = d.is_cached
     ? `<li class="cachefoot"><span class="mk">·</span>` +
-      `This domain had already been judged on an earlier consensus run, so the verifier ` +
-      `returned that answer instead of reasoning again — this transaction still ran ` +
-      `consensus and has its own hash` +
+      `We had already checked this domain on an earlier run, so the validators returned ` +
+      `that answer instead of deciding again — this check still ran and has its own ` +
+      `receipt` +
       (d.original_tx_id
-        ? `; the run that filled the cache is ` +
+        ? `; the earlier check that decided it is ` +
           `<a href="${EXPLORER}/tx/${esc(d.original_tx_id)}" target="_blank" rel="noopener" ` +
           `style="color:var(--accent)">${esc(d.original_tx_id)} ↗</a>`
         : "") +
       `.</li>`
     : "";
 
-  // The status chip and the raw contract tag are normally different words
-  // ("flagged" vs "scam"), but `unverifiable` labels itself with the same word
-  // it is tagged with, which rendered as two identical chips. Show the tag only
-  // when it says something the status chip doesn't.
+  // The status chip and the contract's own tag are normally different words
+  // ("flagged" vs "scam"), which is worth showing. `unverifiable` is the one
+  // verdict whose tag means exactly what the chip already says, so printing
+  // both reads as two chips making the same point twice.
   //
-  // `verdict` is already lowercased, so it compares to `statusChip` directly.
+  // The guard tests the CONTRACT word, not the display word in `statusChip`.
+  // Those used to be the same string, so the match held by accident; the chip
+  // now reads "couldn't verify", and an equality test against it would quietly
+  // stop matching and bring the duplicate chip back.
+  //
   // There is deliberately no `|| "blocked"` fallback: it fired only when
   // `verdict` was empty — the one case with no tag to show — and printed
-  // "tag: blocked" on a transaction that named no verdict, reading as a verdict
-  // it never reached. The contract's real `blocked` (a cache-hit return) arrives
+  // "tag: blocked" on a check that named no verdict, reading as a verdict it
+  // never reached. The contract's real `blocked` (a cache-hit return) arrives
   // as a literal string and still shows.
-  const statusChip = cls === "ok" ? "verified" : cls === "warn" ? "unverifiable" : "flagged";
-  const tagChip = !verdict || verdict === statusChip
+  const statusChip = cls === "ok" ? "verified"
+                   : cls === "warn" ? "couldn't verify" : "flagged";
+  const tagChip = !verdict || verdict === "unverifiable"
     ? ""
     : `<span class="chip plain">tag: ${esc(verdict)}</span>`;
 
@@ -1057,21 +1068,21 @@ function showResult(s, url, brand) {
           </div>
           <div class="res-title">${esc(title)}</div>
           <div class="res-policy">${esc(policy)}</div>
-          <div class="res-url">checkout ${esc(url)} · claimed brand ${esc(brand)}</div>
+          <div class="res-url">checking ${esc(url)} · brand ${esc(brand)}</div>
         </div>
         <div class="meter">
-          <div class="row"><span style="color:var(--dim)">Consensus confidence</span>
+          <div class="row"><span style="color:var(--dim)">How sure they were</span>
             <span class="v">${conf === null ? "—" : conf + "%"}</span></div>
           <div class="track"><div class="fill" id="conffill"></div></div>
           <div class="foot">
-            <span>quorum ${q.agree}/${q.total} agree</span>
-            <span>${d.is_cached ? "live tx · verdict reused from cache" : "live consensus"}</span>
+            <span>${q.agree} of ${q.total} validators agreed</span>
+            <span>${d.is_cached ? "we'd already checked this domain" : "just checked"}</span>
           </div>
         </div>
       </div>
 
       <div class="findings">
-        <div class="lbl">Validator reasoning</div>
+        <div class="lbl">What the validators said</div>
         <ul>${findings}${cacheFoot}</ul>
       </div>
 
@@ -1087,13 +1098,13 @@ function votesTable(consensus) {
   const vs = (consensus && consensus.validators) || [];
   if (!vs.length) {
     return `<div style="padding:18px 24px;font-size:12.5px;color:var(--dim)">
-      no validator votes were returned for this transaction</div>`;
+      no validator votes came back for this check</div>`;
   }
   const rows = vs.map(v => {
     const idle = v.vote !== "agree";
     const model = v.model
       ? esc(v.model) + (v.provider ? ` <span class="prov">${esc(v.provider)}</span>` : "")
-      : `<span class="nonesuch">— not queried</span>`;
+      : `<span class="nonesuch">— didn't vote</span>`;
     return `<tr class="${idle ? "idle" : ""}">
       <td class="addr">${esc(short(v.address))}${v.role === "leader"
         ? '<span class="leaderchip">LEADER</span>' : ""}</td>
@@ -1104,8 +1115,8 @@ function votesTable(consensus) {
   }).join("");
   return `<table class="vtable">
     <thead><tr>
-      <th>Validator address</th><th>Model</th>
-      <th class="num">Processing</th><th>Vote</th>
+      <th>Validator</th><th>AI model</th>
+      <th class="num">Time taken</th><th>Vote</th>
     </tr></thead>
     <tbody>${rows}</tbody>
   </table>`;

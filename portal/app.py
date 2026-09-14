@@ -82,7 +82,7 @@ EXAMPLES = [
     {"label": "Target cart",
      "url": "https://www.target.com/cart", "brand": "target",
      "expected": "cleared"},
-    {"label": "Sephora (blocks validators → unverifiable)",
+    {"label": "Sephora (blocks our validators — can't be checked)",
      "url": "https://sephora.com/checkout", "brand": "sephora",
      "expected": "unverifiable"},
 ]
@@ -306,7 +306,7 @@ def submit(req: CheckRequest, request: Request):
             "url": url, "brand": brand, "domain": domain,
             "status": "error", "is_cached": False,
             "is_real": False, "decision": "BLOCK",
-            "reason": f"could not submit the validation transaction: {e}",
+            "reason": f"couldn't send the check to GenLayer: {e}",
         }, 200)
     _record(domain, brand, None, "submitted")
     return {"url": url, "brand": brand, "domain": domain,
@@ -489,10 +489,9 @@ def _no_key_response(url, brand, domain):
         "url": url, "brand": brand, "domain": domain,
         "status": "no_key", "is_cached": False,
         "is_real": False, "decision": "BLOCK",
-        "reason": ("this portal has no funded key configured, so it cannot "
-                   "submit validation transactions — every check here is a "
-                   "real on-chain transaction, and there is no cached "
-                   "shortcut to fall back on"),
+        "reason": ("this demo can't reach GenLayer right now — its wallet isn't "
+                   "set up, so it can't send a real check, and it won't pretend "
+                   "to have run one"),
     }
 
 
@@ -501,9 +500,9 @@ def _rate_limited_response(url, brand, domain):
         "url": url, "brand": brand, "domain": domain,
         "status": "rate_limited", "is_cached": False,
         "is_real": False, "decision": "BLOCK",
-        "reason": ("rate limit reached for this visitor — each check submits "
-                   "a real transaction, so the portal caps how many one "
-                   "visitor can send per hour. Try again later."),
+        "reason": ("You've hit the limit for this visitor — each check is a real "
+                   "one, so the portal caps how many a single person can send per "
+                   "hour. Try again later."),
     }
 
 

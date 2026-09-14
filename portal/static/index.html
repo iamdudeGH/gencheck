@@ -963,6 +963,15 @@ function showResult(s, url, brand) {
   // made. Both branches BLOCK, so the gate stayed closed, but the page
   // described the wrong thing. Match the vocabulary case-insensitively rather
   // than trusting the casing to hold.
+  //
+  // The same mis-description had a second, reachable route: a transaction that
+  // finished with a return but decoded to nothing, with no cached verdict to
+  // fall back on, arrives here as `verdict: null` (app.py passes
+  // `decode_verdict()`'s None straight through). `null` is not a word in the
+  // scam vocabulary — it means no verdict was obtained — so it belongs in the
+  // unverifiable arm, not the else. `!verdict` is safe to test there because
+  // the PAY arm runs first and `_cache_fallback` always sets a verdict
+  // ("real" or "blocked"), so an empty one really is "no verdict".
   const verdict = String(d.verdict || "").toLowerCase();
   const status = String(d.status || "").toLowerCase();
   const decision = String(d.decision || "").toUpperCase();
@@ -971,7 +980,8 @@ function showResult(s, url, brand) {
   if (decision === "PAY") {
     cls = "ok"; title = "Verified seller";
     policy = `POLICY TRIGGERED: [PROCEED] → consensus confirms the genuine seller for “${brand}”`;
-  } else if (verdict === "unverifiable" || status === "no_verdict" || status === "error") {
+  } else if (!verdict || verdict === "unverifiable" ||
+             status === "no_verdict" || status === "error") {
     cls = "warn"; title = "Unverifiable";
     policy = "POLICY TRIGGERED: [STOP_PAYMENT] → validators could not verify this page — fail closed";
   } else {
@@ -1026,11 +1036,17 @@ function showResult(s, url, brand) {
   // ("flagged" vs "scam"), but `unverifiable` labels itself with the same word
   // it is tagged with, which rendered as two identical chips. Show the tag only
   // when it says something the status chip doesn't.
+  //
+  // `verdict` is already lowercased, so it compares to `statusChip` directly.
+  // There is deliberately no `|| "blocked"` fallback: it fired only when
+  // `verdict` was empty — the one case with no tag to show — and printed
+  // "tag: blocked" on a transaction that named no verdict, reading as a verdict
+  // it never reached. The contract's real `blocked` (a cache-hit return) arrives
+  // as a literal string and still shows.
   const statusChip = cls === "ok" ? "verified" : cls === "warn" ? "unverifiable" : "flagged";
-  const tag = verdict || "blocked";
-  const tagChip = tag.toLowerCase() === statusChip
+  const tagChip = !verdict || verdict === statusChip
     ? ""
-    : `<span class="chip plain">tag: ${esc(tag)}</span>`;
+    : `<span class="chip plain">tag: ${esc(verdict)}</span>`;
 
   $("cons-body").innerHTML = `
     <div class="panel side ${cls}">

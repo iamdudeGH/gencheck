@@ -1012,15 +1012,22 @@ function showResult(s, url, brand) {
       `.</li>`
     : "";
 
+  // The status chip and the raw contract tag are normally different words
+  // ("flagged" vs "scam"), but `unverifiable` labels itself with the same word
+  // it is tagged with, which rendered as two identical chips. Show the tag only
+  // when it says something the status chip doesn't.
+  const statusChip = cls === "ok" ? "verified" : cls === "warn" ? "unverifiable" : "flagged";
+  const tag = String(d.verdict || "blocked");
+  const tagChip = tag.toLowerCase() === statusChip
+    ? ""
+    : `<span class="chip plain">tag: ${esc(tag)}</span>`;
+
   $("cons-body").innerHTML = `
     <div class="panel side ${cls}">
       <div class="res-head">
         <div style="min-width:280px;flex:1">
           <div class="chips">
-            <span class="chip ${cls}">${
-              cls === "ok" ? "verified" : cls === "warn" ? "unverifiable" : "flagged"
-            }</span>
-            <span class="chip plain">tag: ${esc(d.verdict || "blocked")}</span>
+            <span class="chip ${cls}">${statusChip}</span>${tagChip}
           </div>
           <div class="res-title">${esc(title)}</div>
           <div class="res-policy">${esc(policy)}</div>
